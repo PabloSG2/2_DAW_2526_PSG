@@ -1,0 +1,30 @@
+body { /*Estilo general del body*/
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f0f0f0;
+  text-align: center;
+}
+.cards-container { /*Contenedor para tarjetas de producto*/
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.card { /*Estilo individual para cada tarjeta*/
+  background: white;
+  border: 1px solid #ccc;
+  width: 150px;
+  padding: 10px;
+}
+.card img { /*Estilo de las imágenes dentro de las tarjetas*/
+  width: 100px;
+  height: 100px;
+  object-fit: cover;     
+  display: block;
+  margin: 0 auto 10px;   
+}
+.card p { /*Estilo del nombre del producto (texto)*/
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+}

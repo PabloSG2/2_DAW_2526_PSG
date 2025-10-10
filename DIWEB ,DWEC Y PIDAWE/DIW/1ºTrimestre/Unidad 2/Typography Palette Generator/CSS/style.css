@@ -1,0 +1,169 @@
+/* style.css — paso 4: variables base */
+:root {
+  /* Colores */
+  --color-bg: #ffffff;     /* fondo */
+  --color-fg: #222222;     /* texto */
+  --color-primary: #1a73e8;/* acento (enlaces, botones) */
+
+  /* Tipografías */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "Courier New", Consolas, Menlo, monospace;
+
+  /* Escala y espaciado */
+  --font-base: 16px;
+  --line-base: 1.5;
+  --space-1: 0.5rem; /* ~8px si 1rem = 16px */
+  --space-2: 1rem;   /* ~16px */
+}
+
+/* Aplicación de las variables */
+body {
+  background: var(--color-bg);                         /* fondo claro */
+  color: var(--color-fg);                              /* gris oscuro, más suave que el negro puro (#000) */
+  font-family: var(--font-sans);                       /* tipografía de sistema */
+  font-size: var(--font-base);                         /* tamaño base estándar */
+  line-height: var(--line-base);                       /* altura de línea cómoda para lectura */
+}
+
+/* style.css — paso 2: contenedor de lectura y estructura básica */
+main {
+  max-width: 72rem;            /* ancho máximo (~1152px si 1rem=16px) */
+  margin: 0 auto;              /* centra el bloque principal en pantallas grandes */
+  padding: 1.5rem 1rem;        /* espacio interno: 1.5rem vertical, 1rem horizontal */
+}
+
+header, footer {
+  padding: 1rem;                     /* añade separación interna */
+  border-top: 1px solid #e6e6e6;     /* líneas finas para delimitar */
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/* style.css — paso 3: jerarquía mínima */
+/* títulos */
+h1 {
+  color: var(--color-fg);           /* color del texto */
+  font-family: var(--font-sans);    /* tipografía base definida en variables */
+  font-size: 1.75rem;               /* tamaño relativo */
+  line-height: 1.2;                 /* altura compacta para títulos */
+  font-weight: 700;                 /* peso fuerte */
+  margin: 0 0 var(--space-1) 0;     /* separación inferior */
+}
+
+/* párrafos */
+p {
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 1rem;                  /* 1rem = tamaño base */
+  line-height: var(--line-base);
+  margin-top: var(--space-1);      /* separación entre párrafos */
+}
+
+/* style.css — paso 5: aplicar variables a tipo y enlaces */
+/* enlaces */
+a {
+  color: var(--color-primary);         /* aplicamos el color de acento */
+  text-decoration: none;               /* quitamos subrayado inicial */
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;          /* feedback visual en hover */
+}
+
+a:focus {
+  outline: 3px solid var(--color-primary); /* foco accesible */
+  outline-offset: 3px;
+  text-decoration: underline;
+}
+
+/* style.css — paso 6: listas, figuras e imágenes */
+ul, ol {
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-1);
+  padding-left: 1.25rem;              /* sangría controlada */
+}
+
+li {
+  margin-bottom: 0.25rem;             /* separación mínima entre items */
+}
+
+figure {
+  margin: var(--space-2) auto;        /* espacio vertical + centrado */
+  text-align: center;                 /* centra imagen y pie */
+}
+
+figcaption {
+  font-size: 0.875rem;                /* tamaño un poco menor */
+  color: #666;                        /* gris neutro */
+  margin-top: 0.5rem;
+}
+
+img {
+  border-radius: 0.25rem;             /* esquinas ligeramente redondeadas */
+}
+
+/* style.css — paso 7: formularios básicos */
+form {
+  margin-top: var(--space-2);         /* separa el formulario del bloque anterior */
+  display: flex;                      /* distribuye elementos en fila o columna */
+  flex-direction: column;            /* organiza en columna */
+  gap: var(--space-1);                /* espacio entre campos */
+}
+
+label {
+  font-weight: 600;                   /* resalta el texto del label */
+}
+
+input, select {
+  padding: 0.5rem;                    /* espacio interno */
+  border: 1px solid #ccc;            /* borde gris claro */
+  border-radius: 0.25rem;            /* esquinas redondeadas suaves */
+  font-size: 1rem;                    /* tamaño coherente con body */
+}
+
+/* style.css — paso 9: botones con variables */
+.button, button {
+  padding: 0.5rem 1rem;                     /* espacio interno cómodo */
+  background-color: var(--color-primary);  /* color de fondo primario */
+  color: #fff;                              /* texto en blanco */
+  border-radius: 0.25rem;                   /* esquinas redondeadas */
+  font-weight: 600;                         /* texto seminegrita */
+  cursor: pointer;                          /* icono de mano al pasar */
+  transition: background-color 0.2s ease;   /* transición suave en hover/focus */
+  border: none;                             /* sin bordes de sistema */
+}
+
+.button:hover, button:hover {
+  background-color: #0f5acc;                /* tono más oscuro en hover */
+}
+
+.button:focus, button:focus {
+  outline: 3px solid var(--color-primary);  /* foco accesible */
+  outline-offset: 2px;
+}
+
+/* style.css — paso 8: vista previa */
+.preview {
+  margin-top: var(--space-2);              /* separa la vista previa del formulario */
+  padding: var(--space-2);                 /* aire interno */
+  background: #fff;                        /* fondo blanco para contraste */
+  border: 1px solid #ddd;                  /* borde gris claro */
+  border-radius: 0.5rem;                   /* esquinas suaves */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);   /* sombra ligera */
+}
+
+.preview-card {
+  max-width: 40rem;                        /* ancho limitado para legibilidad */
+  margin: 0 auto;                          /* centrado horizontal */
+  text-align: left;                        /* texto alineado a la izquierda */
+}
+
+/* Inputs tipo color como cuadros pequeños y simples */
+input[type="color"] {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  padding: 0;
+  appearance: none;
+}

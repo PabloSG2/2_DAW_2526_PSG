@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- index.html -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typography Palette Generator</title>
+
+  <!-- Vinculamos las hojas de estilo -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Vinculamos el script principal (aunque esté vacío por ahora) -->
+  <script src="js/main.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Typography Palette Generator</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Descripción del proyecto</h2>
+      <p>
+        Este proyecto tiene como objetivo crear una herramienta que nos permita experimentar
+        con <strong>paletas de colores</strong> y <em>tipografías</em> para comprender cómo afectan al diseño web.
+      </p>
+    </section>
+
+    <section>
+      <h2>Elementos de prueba</h2>
+      <ul>
+        <li>Párrafos de texto</li>
+        <li>Listas con viñetas</li>
+        <li>Enlaces externos</li>
+        <li>Imágenes</li>
+        <li>Formularios</li>
+      </ul>
+
+      <p>
+        Puedes consultar más información sobre el uso del color en diseño en
+        <a href="https://es.wikipedia.org/wiki/Color" target="_blank" rel="noopener noreferrer">Wikipedia</a>.
+      </p>
+
+      <figure>
+        <img src="IMG/imagen.jpg" alt="Ejemplo de imagen para pruebas de estilo">
+        <figcaption>Imagen de ejemplo para comprobar estilos aplicados.</figcaption>
+      </figure>
+
+      <form>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre">
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+    <section class="tool" aria-labelledby="tool-title">
+      <h2 id="tool-title">Generador: colores y tipografías</h2>
+
+      <form class="tool-form">
+        <fieldset>
+          <legend>Colores</legend>
+
+          <div class="control">
+            <label for="color-bg">Fondo:</label>
+            <input type="color" id="color-bg" name="color-bg" value="#ffffff">
+          </div>
+
+          <div class="control">
+            <label for="color-fg">Texto:</label>
+            <input type="color" id="color-fg" name="color-fg" value="#222222">
+          </div>
+
+          <div class="control">
+            <label for="color-primary">Primario:</label>
+            <input type="color" id="color-primary" name="color-primary" value="#1a73e8">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Tipografía</legend>
+
+          <div class="control">
+            <label for="font-sans">Familia:</label>
+            <select id="font-sans" name="font-sans">
+              <option value='system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif'>Sistema (UI)</option>
+              <option value='"Segoe UI",Roboto,Arial,sans-serif'>Segoe UI / Roboto</option>
+              <option value='Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif'>Inter (si está instalada)
+              </option>
+            </select>
+          </div>
+
+          <div class="control">
+            <label for="font-weight">Peso:</label>
+            <select id="font-weight" name="font-weight">
+              <option value="400">400 (normal)</option>
+              <option value="500">500</option>
+              <option value="600">600</option>
+              <option value="700" selected>700 (negrita)</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button type="button" id="copy-vars">Copiar variables</button>
+          <button type="button" id="reset-vars">Restablecer</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="preview" aria-labelledby="preview-title" aria-live="polite">
+      <h2 id="preview-title">Vista previa</h2>
+      <article class="preview-card">
+        <h1>Título de ejemplo</h1>
+        <p>Este es un párrafo de ejemplo para comprobar legibilidad, tamaño y altura de línea.</p>
+        <p>Un <a href="#">enlace de ejemplo</a> con estado hover y foco accesible.</p>
+        <button class="button">Botón primario</button>
+      </article>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Proyecto educativo – 2º DAW DIW</p>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
