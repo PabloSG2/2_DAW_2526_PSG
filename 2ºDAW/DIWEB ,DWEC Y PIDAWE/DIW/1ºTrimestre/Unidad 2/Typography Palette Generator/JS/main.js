@@ -33,10 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     root.style.setProperty("--color-primary", colorPrimary.value); // Actualiza el color primario
     root.style.setProperty("--font-sans", fontSans.value);        // Actualiza la familia tipográfica
     root.style.setProperty("--font-weight", fontWeight.value);    // Actualiza el peso tipográfico
-
-    // Antes: se aplicaba el peso al body entero
-    // document.body.style.fontWeight = fontWeight.value;
-    // Ahora lo quitamos para que solo afecte a los elementos que usen la variable CSS
   }
 
   // Función para copiar las variables CSS actuales al portapapeles
@@ -82,4 +78,3 @@ document.addEventListener("DOMContentLoaded", () => {
   // Llamamos a la función al iniciar para aplicar los valores actuales
   updateCSSVars();
 });
-
