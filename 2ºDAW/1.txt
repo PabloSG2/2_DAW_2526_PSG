@@ -2,3 +2,4 @@ divxtotal.wtf (para peliculas)
 si le das a ! y tab te hace el html
 
 inazuma-xi.vercel (11)
+manzdev (HTML, css y JavaScript)
