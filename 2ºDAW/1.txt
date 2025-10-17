@@ -3,3 +3,9 @@ si le das a ! y tab te hace el html
 
 inazuma-xi.vercel (11)
 manzdev (HTML, css y JavaScript)
+
+Portapapeles: Windows + V
+Control+Alt+4 : ~
+
+https://www.jscamp.dev/ (Pagina para ayudar en CSS+HTML+JavaScript)
+https://learnxinyminutes.com/es  (para diferentes programas)
