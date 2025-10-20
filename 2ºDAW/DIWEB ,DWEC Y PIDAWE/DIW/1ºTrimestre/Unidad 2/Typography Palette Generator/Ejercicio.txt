@@ -1,0 +1,1 @@
+Arreglar lo de la linea de color para que no muestre una - sino el cuadro completo con el color
