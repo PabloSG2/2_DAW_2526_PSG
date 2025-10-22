@@ -2,3 +2,6 @@
 Los códigos de respuesta no cae en el examen
 del apartado de lenguajes y tecnologías: Framework de cada lenguaje
 Punto 7 no cae
+
+*Tema 2*
+Punto 2.3 del tema no cae
