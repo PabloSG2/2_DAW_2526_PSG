@@ -2,3 +2,7 @@ https://iac.mooo.com/~d24pablo/
 https://iac.mooo.com/bbdd
 
 d24pablo constraseña: la de siempre
+
+d24pablo@iac.mooo.com (Puerto 54245)
+
+mirar fallo grep "usuario" /var/log/apache2/error.log/tail
