@@ -40,6 +40,98 @@ def ejercicio3():
     else:
         print("El año no es bisiesto")
 
+#Ejercicio4-Número dentro de rango
+#Pide al usuario un número y comprueba si se
+#encuentra dentro del rango 1–100. Indica si está
+#“dentro del rango”, “por debajo” o “por encima”.
+def ejercicio4():
+    numero = int(input("Introduzca un número: "))
+    if numero in range(1, 101):
+        print("Dentro del rango")
+    elif numero < 1:
+        print("Por debajo del rango")
+    else:
+        print("Por encima del rango")
+
+#Ejercicio5-Múltiplos de 5 y 7
+#Muestra todos los números del 1 al 1000
+#que sean múltiplos de 5, de 7 o de ambos,
+#indicando a qué conjunto pertenece cada uno.
+def ejercicio5():
+    numero = int(input("Introduzca multiplos del 1 al 1000"))
+    for numero in range(1, 1001):
+        if numero % 5 == 0 and numero % 7 == 0:
+            print(f"{numero} es múltiplo de 5 y de 7")
+        elif numero % 5 == 0:
+            print(f"{numero} es múltiplo de 5")
+        elif numero % 7 == 0:
+            print(f"{numero} es múltiplo de 7")
+
+#Ejercicio6-Sumatoria hasta N
+#Pide un número entero positivo `N` y calcula
+#la suma de todos los enteros desde 1 hasta
+#`N` usando un bucle `for`. Luego muestra el
+#resultado y la fórmula algebraica equivalente.
+def ejercicio6():
+    N= int(input("Introduzca un numero entero positivo"))
+    if N > 0:
+        suma = 0
+        for i in range(1, N + 1):
+            suma += i 
+        # Fórmula algebraica: n * (n + 1) / 2
+        formula = N * (N + 1) // 2
+        print(f"La suma de los números del 1 al {N} es: {suma}")
+        print(f"Fórmula algebraica equivalente: ({N} * ({N} + 1)) / 2 = {formula}")
+    else:
+        print("Por favor, introduce un número positivo.")
+
+#Ejercicio7-Tabla de Multiplicar
+#Crea un programa que muestre todas las tablas
+#de multiplicar del 1 al 10 usando bucles anidados.
+#Cada tabla debe tener un encabezado identificativo.
+def ejercicio7():
+    for i in range(1,11):
+        print(f'\n---Tabla del {i}------')
+        for j in range(1,11):
+            print(f'{i} x {j} = {i*j}')
+
+#Ejercico8-Adivina el numero
+#Genera un número aleatorio entre 1 y 50.
+#Pide al usuario que adivine el número.
+#Usa un bucle `while` que indique si el número
+#introducido es mayor o menor hasta acertar.
+def ejercicio8():
+    import random
+    numero_secreto = random.randint(1, 50)
+    numero = 0
+    while numero != numero_secreto:
+        numero = int(input("Adivina el número (1-50): "))
+        if numero < numero_secreto:
+            print("Más grande")
+        elif numero > numero_secreto:
+            print("Más pequeño")
+        else:
+            print("¡Acertaste!")
+#Ejercicio9-Simulacion de consola
+#Simula una consola de comandos donde el usuario
+#pueda escribir “Encender”, “Apagar” o “Salir”.
+#Cualquier otro comando debe devolver “Comando no reconocido”.
+#Si elige “Apagar”, pide confirmación antes de salir.
+def ejercicio9():
+    comando = input("Introduzca un comando: ")
+    if comando == "Encender" or comando == "Salir":
+        print(f"{comando} consola")
+    elif comando == "Apagar":
+        confirmacion = input("¿Estás seguro de que quieres apagar? (s/n): ")
+        if confirmacion.lower() == "s":
+            print("Apagando consola...")
+        else:
+            print("Cancelando apagado...")
+    else:
+        print("Comando no reconocido.")
+
+
+
 # -------------------------------
 # MENÚ PRINCIPAL
 # -------------------------------
