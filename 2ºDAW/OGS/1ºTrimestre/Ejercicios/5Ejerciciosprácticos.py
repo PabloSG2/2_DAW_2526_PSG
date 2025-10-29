@@ -130,7 +130,18 @@ def ejercicio9():
     else:
         print("Comando no reconocido.")
 
-
+#Ejercicio 10-Contador con saltos
+#Escribe un programa que imprima los números del
+#1 al 100, pero: Si el número es múltiplo de 3, no se
+#imprime (usa `continue`). Si el número llega a 77, el
+#programa se detiene inmediatamente (usa `break`).
+def ejercicio10():
+    for i in range(1, 101):
+        if i % 3 == 0:
+            continue  # salta los múltiplos de 3
+        if i == 77:
+            break  # detiene el programa al llegar a 77
+        print(i)
 
 # -------------------------------
 # MENÚ PRINCIPAL

@@ -1,0 +1,27 @@
+*Informe 1 17/10/2025*
+Ampliar el 2.estudio del arte(análisis del mercado)
+con por ejemplo; amazon, E-BAY, WALLPOP
+BUSCAR DIFERENTES Tiendas Online para captar ideas nuevas:
+
+*Informe desde casa 20/10/2025**
+SERVIDOR DE IMAGENES
+Estrella para valoraciones del 0/10 
+
+*INFORME 2 24/10/2025*
+para constraseñas usar el método: password_hash()
+base de datos: Mockaroo (https://www.mockaroo.com/)
+
+PROTOTIPO:
+	-Añadir a la tarjeta una categoría
+	-Buscar un buscador para IA (apartado de producto buscador)
+	-Tener un botón de registro  o en una misma ventana como iniciar sesión y registro. 
+	-Campo de descripción_breve (un varchar con un limite) y descripcion_completa (Cuando se 	pulsa en el producto y seria mas largo)
+	-Panel de administración (añadir un ranking con el producto)
+
+DOCUMENTO:
+	-Estudio del Arte hay que poner fotos de por ejemplo amazon luego además información 
+	mas o menos de los puntos
+	-Hacer un diagrama principal y luego uno de caso de uso por las ventanas
+	Caso de uso cliente añade producto	
+		-Usuario estándar: inicia sesión o se registrado
+		Login y registro

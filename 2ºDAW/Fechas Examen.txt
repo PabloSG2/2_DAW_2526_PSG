@@ -1,5 +1,7 @@
 *DAW*
 Tema 1: 6 de Octubre
+Tema 2: 24 Noviembre
+Recuperación: 1 de Diciembre
 
 *DWES*
 Tema 2: PHP 16 de Octubre
@@ -10,5 +12,9 @@ Tema 3: PHP 5 Noviembre
 
 *DIW*
 Tema 3: 23 OCTUBRE
+Tema 4: 6 Noviembre
+Tema 5: 20 Noviembre
+Tema 6: 4 Diciembre
 
 *OGS*
+Tema 1 al 5 : 14 Noviembre

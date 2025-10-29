@@ -2,3 +2,7 @@
 Los códigos de respuesta no cae en el examen
 del apartado de lenguajes y tecnologías: Framework de cada lenguaje
 Punto 7 no cae
+
+*Tema 3* 
+Caen formularios
+se puede poner <form> y luego input y te lo hace
