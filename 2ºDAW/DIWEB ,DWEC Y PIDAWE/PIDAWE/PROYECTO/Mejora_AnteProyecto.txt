@@ -1,4 +1,4 @@
-*Informe 1 17/10/2025*
+*Revisión Apartado 17/10/2025*
 Ampliar el 2.estudio del arte(análisis del mercado)
 con por ejemplo; amazon, E-BAY, WALLPOP
 BUSCAR DIFERENTES Tiendas Online para captar ideas nuevas:
@@ -7,7 +7,7 @@ BUSCAR DIFERENTES Tiendas Online para captar ideas nuevas:
 SERVIDOR DE IMAGENES
 Estrella para valoraciones del 0/10 
 
-*INFORME 2 24/10/2025*
+*Revisión 1 24/10/2025*
 para constraseñas usar el método: password_hash()
 base de datos: Mockaroo (https://www.mockaroo.com/)
 
@@ -27,9 +27,12 @@ DOCUMENTO:
 		-Usuario estándar: inicia sesión o se registrado
 		Login y registro
 
-*INFORME 3 27/10/2025*
+*Revisión 2 27/10/2025*
 Hay que meter 3 diagramas de clase:
 	-Diagramas general de actores y funcionalidades
 	-Diagramas de casos de uso por ventanas o secciones
 	-Diagrama de datos o estructura de información
 Crear el código MYSQL y luego hacer el diagrama 
+
+*Revisión desde casa 2 30/10/2025*
+Ya está añadido las diferentes implementaciones solo falta revisar completo por si hay que añadir o no
