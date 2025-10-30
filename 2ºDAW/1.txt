@@ -9,3 +9,5 @@ Control+Alt+4 : ~
 
 https://www.jscamp.dev/ (Pagina para ayudar en CSS+HTML+JavaScript)
 https://learnxinyminutes.com/es  (para diferentes programas)
+
+Diagrama: https://online.visual-paradigm.com/app/diagrams/#diagram:proj=0&type=ClassDiagram&width=11&height=8.5&unit=inch
