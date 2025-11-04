@@ -3,11 +3,9 @@ Ampliar el 2.estudio del arte(análisis del mercado)
 con por ejemplo; amazon, E-BAY, WALLPOP
 BUSCAR DIFERENTES Tiendas Online para captar ideas nuevas:
 
-*Informe desde casa 20/10/2025**
+*Revisión 1 24/10/2025*
 SERVIDOR DE IMAGENES
 Estrella para valoraciones del 0/10 
-
-*Revisión 1 24/10/2025*
 para constraseñas usar el método: password_hash()
 base de datos: Mockaroo (https://www.mockaroo.com/)
 
@@ -27,7 +25,7 @@ DOCUMENTO:
 		-Usuario estándar: inicia sesión o se registrado
 		Login y registro
 
-*Revisión 2 27/10/2025*
+*Cosas que dijo Javi para mete 27/10/2025r*
 Hay que meter 3 diagramas de clase:
 	-Diagramas general de actores y funcionalidades
 	-Diagramas de casos de uso por ventanas o secciones
