@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>Ejercicio 2: PHP dentro de HTML</h1><hr>
+    <h1>Ejercicio 3: PHP dentro de HTML</h1><hr>
     <?php
     // --- Definición de variables ---
     $nombre = 'Pablo';$apellido = "SG";
@@ -42,8 +42,5 @@
     echo "<br><strong>Versión del Sitio:</strong> " . VER_SITIO;
     ?>
     <hr>
-    <footer>
-        <p>Generado con PHP embebido en HTML <?php date("Y") ?></p>
-    </footer>
 </body>
 </html>

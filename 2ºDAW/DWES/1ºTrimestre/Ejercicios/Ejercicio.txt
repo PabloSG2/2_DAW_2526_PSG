@@ -1,6 +1,0 @@
-Modificar practica 3 de la UD3
-con los siguientes cambios
-
-que en el registro se encripte la contraseña antes de guardar el usuario
-Modificar el login para que tenga en cuenta que la contraseña esta encriptada (usando_password_verify)
-Modificar el login para que una vez el email y la contraseña se aocrretcto, inicie sesión guardando en una variable de sesión el email del usuario logueado.

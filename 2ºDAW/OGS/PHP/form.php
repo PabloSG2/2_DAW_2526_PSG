@@ -7,13 +7,13 @@
 <body>
     <h1>Datos:</h1>
     <?php
-    echo '<p>Código=' . $_GET['tipo'] . '</p>';
+    echo '<p>Codigo=' . $_GET['tipo'] . '</p>';
     echo '<p>Nombre=' . $_GET['nom'] . '</p>';
     echo '<p>Edad=' . $_GET['edad'] . '</p>';
     ?>
     <h2>Añadiendo datos...</h2>
     <?php
-    $con = mysqli_connect('localhost','d24pablo_d24a','d24pablo_bdd','1234');
+    $con = mysqli_connect('localhost', 'd24pablo_prueba', '1234', 'd24pablo_bd');
     $pre = mysqli_prepare($con, 'INSERT INTO tabla (tipo,nombre,edad) VALUES (?,?,?)');
     mysqli_stmt_bind_param(
         $pre,
