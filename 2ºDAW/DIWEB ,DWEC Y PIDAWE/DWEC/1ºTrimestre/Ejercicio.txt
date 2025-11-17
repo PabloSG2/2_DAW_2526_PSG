@@ -1,9 +1,0 @@
-evento.preventDefault.();
-
-Seguir a través del JavaScript hay ejercicios (esta en student.model.spec.js) 
-SESIÓN 1, 2, 3, 4 , 5 , 6 y 7 
-
-*Proyecto DIW*
-Para el proyecto meter también claro y oscuro
-Meter un reset y aternative css para el proyecto
-para registro y inicio puedo hacer como el proyecto de tenerlo los dos en uno (estilo lenguaje.js buscador: array)
