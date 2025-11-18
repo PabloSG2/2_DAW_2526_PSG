@@ -1,3 +1,9 @@
+correo tienda prototipo figma: 
+Cliente: `cliente@example.com` / `cliente123`
+Admin: `admin@originalsychicota3d.com` / `admin123`
+Tienda: `tienda@originalsychicota3d.com` / `tienda123`
+
+
 *Revisión Apartado 17/10/2025*
 Ampliar el 2.estudio del arte(análisis del mercado)
 con por ejemplo; amazon, E-BAY, WALLPOP

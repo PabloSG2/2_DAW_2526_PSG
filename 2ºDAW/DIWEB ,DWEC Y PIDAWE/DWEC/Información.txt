@@ -1,14 +1,14 @@
-evento.preventDefault.();
-
-**Lista de Tareas**
-El proyecto ha estado mal hay que meter mirar mas utilidades ya con eso ira mejor por ello las diferentes implementaciones que habría que añadir y con eso ya si se podrá explicar mejor
-
-*Proyect-root*
-Para el proyecto meter también claro y oscuro
-Meter un reset y aternative css para el proyecto
-para registro y inicio puedo hacer como el proyecto de tenerlo los dos en uno (estilo lenguaje.js buscador: array)
-
+**Importante**
+evento.preventDefault.(); //Cancela funcionamiento
 seguir un naming-convection (por ejemplo camelCase)
 
-Seguir a través del JavaScript hay ejercicios (esta en student.model.spec.js) 
-SESIÓN 1, 2, 3, 4 , 5 , 6 y 7 
+
+**Lista de Tareas**
+El proyecto ha estado mal hay que meter mas utilidades ya con eso ira mejor. Si tuviera diferentes implementaciones que habría que añadir y con eso ya si se podrá explicar mejor
+
+**Proyect-root**
+Para el proyecto meter también claro y oscuro
+para registro y inicio puedo hacer como el proyecto de tenerlo en uno (estilo lenguaje.js buscador: array)
+
+**Ejercicios**
+student.model.spec.js: SESIÓN 1, 2, 3, 4, 5, 6 y 7 
