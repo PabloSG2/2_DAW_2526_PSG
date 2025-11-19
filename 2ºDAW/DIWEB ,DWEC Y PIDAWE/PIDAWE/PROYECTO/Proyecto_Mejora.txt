@@ -1,0 +1,36 @@
+---------------ANTEPROYECTO---------------
+*Correo tienda prototipo figma:*
+Cliente: cliente@example.com / cliente123
+Admin: admin@originalsychicota3d.com / admin123
+Tienda: tienda@originalsychicota3d.com / tienda123
+
+*Revisión Apartado 17/10/2025*
+Ampliar el 2.estudio del arte(análisis del mercado)
+SERVIDOR DE IMAGENES
+Estrella para valoraciones del 0/10 
+base de datos: Mockaroo (https://www.mockaroo.com/)
+para contraseñas usar el método: password_hash()
+
+*Revisión 1 24/10/2025*
+PROTOTIPO:
+	-Añadir a la tarjeta una categoría
+	-Buscar un buscador para IA (apartado de producto buscador)
+	-Tener botón de registro o en una misma ventana como iniciar 	sesión y registro. 
+	-Campo de descripción_breve (un varchar con un limite) y 	descripcion_completa (Cuando pulsa en el producto seria mas largo)
+	-Panel de administración (añadir un ranking con el producto)
+DOCUMENTO:
+	-Estudio del Arte hay que poner fotos y además información de puntos
+	-Hacer un diagrama principal y luego caso de uso por ventanas
+	Caso de uso cliente añade producto	
+		-Usuario estándar: inicia sesión o es registrado
+
+Hay que meter 3 diagramas de clase:
+	-Diagramas general de actores y funcionalidades
+	-Diagramas de casos de uso por ventanas o secciones
+	-Diagrama de datos o estructura de información
+Crear el código MYSQL y luego hacer el diagrama 
+
+
+---------------PROYECTO---------------
+
+
