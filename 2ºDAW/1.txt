@@ -2,6 +2,8 @@
 si le das a ! y tab te hace el HTML (VISUAL STUDIO)
 Portapapeles: Windows + V  Control+Alt+4 : ~
 Fastone (Usuario: damas y Comstraseña: PXWQD-RXMVZ-XYAYZ-EAVVJ)
+Alt+Mayu+shift+flecha visual studio copia linea debajo
+
 
 manzdev (HTML, css y JavaScript)
 https://www.jscamp.dev/ (Pagina para ayudar en CSS+HTML+JavaScript)
