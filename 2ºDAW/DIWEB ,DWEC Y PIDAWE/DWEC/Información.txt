@@ -13,9 +13,11 @@ para registro y inicio puedo hacer como el proyecto de tenerlo en uno (estilo le
 student.model.spec.js: SESIÓN 1, 2, 3, 4, 5, 6 y 7 
 
 *Para píldora he cogido estas paginas*
-Hay que crear un HTML para ejecutar el javascript
+Hay que crear un HTML para ejecutar el JavaScript
+Esticos y Abstracto (clases,interfaces)  
 
 https://www.freecodecamp.org/espanol/news/programacion-orientada-a-objectos-en-javascript-explicado-con-ejemplos/
 https://developer.mozilla.org/es/docs/conflicting/Learn/JavaScript/Objects/Classes_in_JavaScript
 https://lenguajejs.com/javascript/oop/que-es/
-                                                                  
+                                                           
+
