@@ -1,7 +1,8 @@
-def email():
-    email = input("Introduzca un email: ")
+def validar_email(email):
     if "@" in email:
-        print("Email correcto")
+        return "Email correcto"
     else:
-        print("Email no correcto")
-        
+        return "Email no correcto"
+
+email = input("Introduzca un email: ")
+print(validar_email(email))
