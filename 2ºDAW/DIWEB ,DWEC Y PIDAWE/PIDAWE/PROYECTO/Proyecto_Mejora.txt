@@ -35,3 +35,14 @@ Crear el código MYSQL y luego hacer el diagrama
 Hay que decidir que hacer con las imágenes si almacenar una imagen en un repositorio o localmente
 Las dos se guardaría o enlace o foto en la base de datos
 
+*Actualización del Proyecto*
+Modificar el análisis de requisitos:
+	-1.Analisis de requisitos
+	-2.Esquema conceptual(Modelo Entidad/Relación)
+	-3.Esquema relacional(Modelo Relacional)
+	-4.Esquema físico(SQL)
+
+6.2(Modificación para el apartado de la Base de Datos)
+8.Anexos (solo se apuntaría cosas importante(información extra por ejemplo "código")
+Insertar datos relevantes con respecto a usuarios, contraseñas
+

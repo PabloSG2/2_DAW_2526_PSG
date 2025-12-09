@@ -1,0 +1,1 @@
+implementaciones con retardo y adelanto y una mini animación
