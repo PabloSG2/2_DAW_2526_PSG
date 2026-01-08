@@ -1,33 +1,42 @@
+/* Estilos generales del cuerpo */
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
   background: #f4f4f4;
 }
 
+/* Título principal */
 h1 {
   text-align: center;
 }
 
+/* Contenedor de cada bloque multimedia */
 .media-container {
   max-width: 800px;
   margin: 20px auto;
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-video, audio {
+/* Ajuste de tamaño para audio y vídeo */
+video,
+audio {
   width: 100%;
   margin: 10px 0;
+  border-radius: 6px;
 }
 
+/* Contenedor de controles personalizados */
 .controls {
   display: flex;
   gap: 10px;
   margin-top: 10px;
+  align-items: center;
 }
 
+/* Estilo de los botones */
 button {
   padding: 8px 12px;
   border: none;
@@ -37,26 +46,30 @@ button {
   cursor: pointer;
 }
 
+/* Efecto hover en botones */
 button:hover {
   background: #005a9e;
 }
 
+/* Barra de progreso (fondo) */
 .progress {
   flex: 1;
-  background: #ddd;
   height: 8px;
+  background: #ddd;
   border-radius: 4px;
   cursor: pointer;
   position: relative;
 }
 
+/* Barra que indica el avance del vídeo */
 .progress-bar {
-  background: #0078d7;
   height: 100%;
   width: 0%;
+  background: #0078d7;
   border-radius: 4px;
 }
 
+/* Imagen responsiva */
 picture img {
   width: 100%;
   border-radius: 8px;

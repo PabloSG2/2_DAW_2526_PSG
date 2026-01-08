@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- Define que el documento usa HTML5 -->
+<html lang="es">
+<!-- Idioma del documento: español -->
+
+<head>
+  <meta charset="UTF-8">
+  <!-- Codificación de caracteres (acentos, ñ, etc.) -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Hace que la web sea responsive en móviles -->
+
+  <title>Gestión Multimedia en HTML5</title>
+  <!-- Título que aparece en la pestaña del navegador -->
+
+  <link rel="stylesheet" href="styles.css">
+  <!-- Enlace a la hoja de estilos externa -->
+</head>
+
+<body>
+
+  <h1>Gestión Multimedia en HTML5</h1>
+  <!-- Título principal de la página -->
+
+  <!-- ===================== AUDIO ===================== -->
+  <div class="media-container">
+    <h2>🎵 Audio HTML5</h2>
+
+    <audio controls preload="none">
+      <!-- controls: muestra botones nativos -->
+      <!-- preload="none": no carga el audio hasta que el usuario interactúa -->
+
+      <source src="sonido/audio.mp3" type="audio/mpeg">
+      <!-- Archivo de audio y su tipo MIME -->
+
+      Tu navegador no soporta audio HTML5.
+      <!-- Texto de respaldo si el navegador no soporta <audio> -->
+    </audio>
+  </div>
+
+  <!-- ===================== VIDEO ===================== -->
+  <div class="media-container">
+    <h2>🎬 Vídeo con controles personalizados</h2>
+
+    <video id="video" preload="metadata">
+      <!-- id: permite controlar el vídeo desde JavaScript -->
+      <!-- preload="metadata": solo carga duración y datos básicos -->
+
+      <source src="sonido/video.mp4" type="video/mp4">
+      <!-- Archivo de vídeo en formato MP4 -->
+
+      <track src="sonido/subtitulos.vtt" kind="subtitles" srclang="es"
+      label="Español" default>
+      <!-- Subtítulos en español para accesibilidad -->
+
+      Tu navegador no soporta vídeo HTML5.
+      <!-- Texto alternativo si el navegador no soporta <video> -->
+    </video>
+
+    <!-- Controles personalizados del vídeo -->
+    <div class="controls">
+      <button id="play">▶️ Play / Pause</button>
+      <!-- Botón para reproducir o pausar -->
+
+      <button id="pip">🖼️ Picture-in-Picture</button>
+      <!-- Botón para activar/desactivar PiP -->
+
+      <div class="progress" id="progress">
+        <!-- Barra de progreso del vídeo -->
+        <div class="progress-bar" id="progress-bar"></div>
+        <!-- Barra interna que indica el avance -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== IMÁGENES ===================== -->
+  <div class="media-container">
+    <h2>🖼️ Imágenes responsivas</h2>
+
+    <picture>
+      <!-- Permite usar distintos formatos según el navegador -->
+
+      <source srcset="sonido/imagen.avif" type="image/avif">
+      <!-- Formato más moderno y optimizado -->
+
+      <source srcset="sonido/imagen.webp" type="image/webp">
+      <!-- Formato optimizado compatible con la mayoría -->
+
+      <img src="sonido/imagen.jpg"
+           alt="Ejemplo de imagen responsiva optimizada">
+      <!-- Imagen de respaldo obligatoria -->
+    </picture>
+  </div>
+
+  <script src="main.js"></script>
+  <!-- Enlace al archivo JavaScript -->
+</body>
+</html>
