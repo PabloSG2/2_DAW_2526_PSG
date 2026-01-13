@@ -10,16 +10,44 @@
 
 <h1>Gestión Multimedia en HTML5</h1>
 
-<!-- ===================== AUDIO ===================== -->
+<!-- ===================== AUDIOS ===================== -->
 <div class="media-container">
-    <h2>🎵 Audio HTML5</h2>
-    <audio controls preload="none">
-        <source src="sonido/audio.mp3" type="audio/mpeg">
-        Tu navegador no soporta audio HTML5.
-    </audio>
+    <h2>🎵 Audios HTML5 (Normal + Avanzado)</h2>
+
+    <!-- Audio normal -->
+    <div class="audio-box">
+        <h3>Audio HTML5</h3>
+        <audio controls preload="none">
+            <source src="sonido/audio.mp3" type="audio/mpeg">
+            Tu navegador no soporta audio HTML5.
+        </audio>
+    </div>
+
+    <!-- Audio personalizado -->
+    <div class="audio-box">
+        <h3>Audio con controles avanzados</h3>
+
+        <audio id="audio2" preload="metadata">
+            <source src="sonido/audio1.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="controls">
+            <button id="audioPlay">▶️</button>
+            <label>Tono / Velocidad:
+                <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
+            </label>
+            <label>Velocidad:
+                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+            </label>
+            <a href="sonido/audio.mp3" download>
+                <button>⬇️ Descargar</button>
+            </a>
+        </div>
+    </div>
 </div>
 
-<!-- ===================== VIDEOS LADO A LADO ===================== -->
+
+<!-- ===================== VIDEOS ===================== -->
 <div class="media-container row">
     
     <!-- Video sin modificar -->
@@ -35,35 +63,42 @@
         <h2>🎬 Vídeo con controles personalizados</h2>
 
         <video id="video" preload="metadata">
-            <source src="sonido/video.mp4" type="video/mp4">
+            <source src="sonido/video1.mp4" type="video/mp4">
         </video>
 
         <div class="controls">
-            <button id="play">▶️ Play / Pause</button>
-            <button id="pip">🖼️ Picture-in-Picture</button>
+            <button id="play">▶️</button>
+            <button id="mute">🔇</button>
+            <button id="pip">🖼️ PiP</button>
+            <button id="fullscreen">⛶</button>
+
+            <div class="time">
+                <span id="current">0:00</span> /
+                <span id="duration">0:00</span>
+            </div>
 
             <div class="progress" id="progress">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
+
+            <label>Volumen:
+                <input type="range" id="volume" min="0" max="1" step="0.05" value="1">
+            </label>
         </div>
     </div>
-
 </div>
 
-<!-- ===================== IMÁGENES LADO A LADO ===================== -->
+<!-- ===================== IMÁGENES ===================== -->
 <div class="media-container row">
 
-    <!-- Imagen sin modificar -->
     <div class="col">
         <h2>🖼️ Imagen sin modificar</h2>
         <img src="sonido/imagen.jpg" class="static-img">
     </div>
 
-    <!-- Imagen modificable -->
     <div class="col">
         <h2>🖌️ Imagen modificable</h2>
 
-        <!-- CONTENEDOR QUE EVITA QUE EL ZOOM TAPE OTROS ELEMENTOS -->
         <div class="img-wrapper">
             <img id="editable-img" src="sonido/imagen1.jpg">
         </div>
@@ -71,10 +106,10 @@
         <div class="controls">
             <button id="zoom">🔍 Zoom</button>
             <button id="opacity">🌫️ Opacidad</button>
+            <button id="rotate">🔄 Rotar</button>
             <button id="reset">♻️ Reset</button>
         </div>
     </div>
-
 </div>
 
 <script src="main.js"></script>

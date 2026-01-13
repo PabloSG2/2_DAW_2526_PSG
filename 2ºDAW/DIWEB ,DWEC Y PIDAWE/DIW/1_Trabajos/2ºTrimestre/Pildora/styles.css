@@ -1,74 +1,91 @@
-/* ======== ESTILO GENERAL DE LA PÁGINA ======== */
+/* ======== ESTILO GENERAL ======== */
+/* Estilo del cuerpo de la página */
 body {
-    font-family: Arial, sans-serif; /* Fuente principal del sitio */
-    margin: 20px; /* Espaciado exterior alrededor de toda la página */
-    background: linear-gradient(135deg, #d9e7ff, #f4f4f4); /* Fondo con degradado suave */
+    font-family: Arial, sans-serif; /* Fuente principal */
+    margin: 20px; /* Margen exterior */
+    background: linear-gradient(135deg, #d9e7ff, #f4f4f4); /* Fondo degradado */
 }
 
-/* Título principal */
+/* Estilo del título principal */
 h1 {
     text-align: center; /* Centra el texto */
     color: #003366; /* Color azul oscuro */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Sombra suave para resaltar */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Sombra del texto */
 }
 
-/* ======== CONTENEDOR GENERAL DE CADA BLOQUE ======== */
+/* ======== CONTENEDORES ======== */
+/* Contenedor de cada bloque multimedia */
 .media-container {
-    max-width: 900px; /* Ancho máximo del bloque */
+    max-width: 900px; /* Ancho máximo */
     margin: 20px auto; /* Centrado horizontal */
-    background: #ffffff; /* Fondo blanco */
-    padding: 20px; /* Espaciado interno */
+    background: #fff; /* Fondo blanco */
+    padding: 20px; /* Espacio interno */
     border-radius: 12px; /* Bordes redondeados */
     border: 2px solid #cce0ff; /* Borde azul claro */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Sombra elegante */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Sombra */
 }
 
 /* ======== FILAS Y COLUMNAS ======== */
+/* Contenedor en fila */
 .row {
-    display: flex; /* Activa diseño en fila */
+    display: flex; /* Diseño flexible */
     gap: 20px; /* Espacio entre columnas */
 }
 
+/* Columna individual */
 .col {
-    flex: 1; /* Cada columna ocupa el mismo espacio */
+    flex: 1; /* Mismo tamaño para cada columna */
 }
 
-/* ======== MULTIMEDIA (IMÁGENES Y VIDEOS) ======== */
-video, img {
-    width: 100%; /* Ocupan todo el ancho disponible */
+/* ======== MULTIMEDIA ======== */
+/* Estilo común para video, imagen y audio */
+video, img, audio {
+    width: 100%; /* Ocupa todo el ancho */
     border-radius: 10px; /* Bordes redondeados */
-    border: 3px solid #99c2ff; /* Borde azul suave */
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* Sombra para resaltar */
+    border: 3px solid #99c2ff; /* Borde azul */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* Sombra */
 }
 
-/* Contenedor que evita que el zoom de la imagen salga de su espacio */
+/* Contenedor para evitar desbordes */
 .img-wrapper {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    overflow: hidden; /* Evita que la imagen ampliada tape otros elementos */
+    overflow: hidden; /* Oculta lo que sobresale */
     border-radius: 10px; /* Bordes redondeados */
 }
 
-/* Imagen editable con animación suave */
+/* Imagen editable */
 #editable-img {
-    transition: 0.3s ease; /* Transición para zoom y opacidad */
+    transition: 0.3s ease; /* Animación suave */
+}
+
+/* ======== CONTROLES ======== */
+/* Contenedor de botones */
+.controls {
+    display: flex; /* Alineación horizontal */
+    flex-wrap: wrap; /* Permite saltos de línea */
+    gap: 10px; /* Espacio entre controles */
+    margin-top: 12px; /* Separación superior */
+    align-items: center; /* Alineación vertical */
+}
+
+/* Etiquetas de sliders */
+.controls label {
+    display: flex; /* Alineación horizontal */
+    align-items: center; /* Centrado vertical */
+    gap: 6px; /* Espacio entre texto y control */
+    font-weight: bold; /* Texto en negrita */
+    color: #003366; /* Color azul */
 }
 
 /* ======== BOTONES ======== */
-.controls {
-    display: flex; /* Alinea botones en fila */
-    flex-wrap: wrap; /* Permite que bajen si no caben */
-    gap: 10px; /* Espacio entre botones */
-    margin-top: 12px; /* Separación respecto al contenido */
-}
-
+/* Estilo general de botones */
 button {
-    padding: 10px 14px; /* Tamaño del botón */
+    padding: 10px 14px; /* Tamaño interno */
     border: none; /* Sin borde */
     border-radius: 6px; /* Bordes redondeados */
-    background: #0066cc; /* Azul principal */
+    background: #0066cc; /* Color azul */
     color: white; /* Texto blanco */
     cursor: pointer; /* Cursor de mano */
-    font-weight: bold; /* Texto más fuerte */
+    font-weight: bold; /* Texto en negrita */
     transition: 0.2s; /* Animación suave */
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra */
 }
@@ -76,23 +93,24 @@ button {
 /* Efecto al pasar el ratón */
 button:hover {
     background: #004d99; /* Azul más oscuro */
-    transform: scale(1.08); /* Aumenta ligeramente */
+    transform: scale(1.08); /* Aumenta tamaño */
 }
 
-/* ======== BARRA DE PROGRESO DEL VIDEO ======== */
+/* ======== BARRA DE PROGRESO ======== */
+/* Contenedor de la barra */
 .progress {
-    flex: 1; /* Ocupa todo el espacio disponible */
-    height: 10px; /* Altura de la barra */
+    flex: 1; /* Ocupa espacio disponible */
+    height: 10px; /* Altura */
     background: #cce0ff; /* Fondo azul claro */
     border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor de mano */
-    border: 2px solid #99c2ff; /* Borde azul */
+    cursor: pointer; /* Cursor interactivo */
+    border: 2px solid #99c2ff; /* Borde */
 }
 
-/* Barra interna que muestra el avance del vídeo */
+/* Barra interna de progreso */
 .progress-bar {
-    height: 100%; /* Misma altura que el contenedor */
-    width: 0%; /* Se actualiza con JavaScript */
+    height: 100%; /* Misma altura */
+    width: 0%; /* Se actualiza con JS */
     background: #004d99; /* Azul oscuro */
     border-radius: 5px; /* Bordes redondeados */
 }

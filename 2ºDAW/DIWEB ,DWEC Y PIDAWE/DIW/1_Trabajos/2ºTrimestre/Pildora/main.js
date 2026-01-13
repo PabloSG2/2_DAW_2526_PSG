@@ -1,155 +1,245 @@
-// ===================== CONTROL DE VIDEO =====================
-
-// Obtiene el elemento <video> que tendrá controles personalizados
+// ===================== VIDEO PERSONALIZADO =====================
+// Obtiene el elemento de video principal
 const video = document.getElementById("video");
 
-// Obtiene el botón Play/Pause
+// Obtiene el botón de reproducir/pausar
 const playBtn = document.getElementById("play");
 
-// Obtiene el botón Picture-in-Picture
+// Obtiene el botón de mute/unmute
+const muteBtn = document.getElementById("mute");
+
+// Obtiene el botón de Picture-in-Picture
 const pipBtn = document.getElementById("pip");
+
+// Obtiene el botón de pantalla completa
+const fullscreenBtn = document.getElementById("fullscreen");
 
 // Obtiene el contenedor de la barra de progreso
 const progress = document.getElementById("progress");
 
-// Obtiene la barra interna que se llenará según el avance del vídeo
+// Obtiene la barra interna que muestra el avance
 const progressBar = document.getElementById("progress-bar");
+
+// Obtiene el control deslizante del volumen
+const volumeSlider = document.getElementById("volume");
+
+// Obtiene el elemento donde se muestra el tiempo actual
+const currentTimeEl = document.getElementById("current");
+
+// Obtiene el elemento donde se muestra la duración total
+const durationEl = document.getElementById("duration");
 
 
 // --------------------- PLAY / PAUSE ---------------------
-
-// Evento que se ejecuta cuando se hace clic en el botón Play/Pause
+// Evento al hacer clic en el botón play
 playBtn.addEventListener("click", () => {
+    // Si el video está pausado, lo reproduce; si no, lo pausa
+    video.paused ? video.play() : video.pause();
+});
 
-    // Si el vídeo está pausado, lo reproduce
-    if (video.paused) {
-        video.play();
+// Evento cuando el video empieza a reproducirse
+video.addEventListener("play", () => playBtn.textContent = "⏸️");
 
-    // Si está reproduciéndose, lo pausa
-    } else {
-        video.pause();
-    }
+// Evento cuando el video se pausa
+video.addEventListener("pause", () => playBtn.textContent = "▶️");
+
+
+// --------------------- MUTE ---------------------
+// Evento al hacer clic en el botón de mute
+muteBtn.addEventListener("click", () => {
+    // Cambia el estado de mute del video
+    video.muted = !video.muted;
+
+    // Cambia el icono según si está muteado o no
+    muteBtn.textContent = video.muted ? "🔊" : "🔇";
 });
 
 
-// --------------------- ACTUALIZAR BARRA DE PROGRESO ---------------------
+// --------------------- VOLUMEN ---------------------
+// Evento al mover el slider de volumen
+volumeSlider.addEventListener("input", () => {
+    // Asigna el valor del slider al volumen del video
+    video.volume = volumeSlider.value;
+});
 
-// Evento que se ejecuta cada vez que cambia el tiempo del vídeo
+
+// --------------------- TIEMPOS ---------------------
+// Evento cuando se cargan los metadatos del video (duración, etc.)
+video.addEventListener("loadedmetadata", () => {
+    // Muestra la duración total formateada
+    durationEl.textContent = formatTime(video.duration);
+});
+
+// Evento que se ejecuta mientras el video avanza
 video.addEventListener("timeupdate", () => {
+    // Actualiza el tiempo actual formateado
+    currentTimeEl.textContent = formatTime(video.currentTime);
 
-    // Comprueba que el vídeo tiene duración válida
-    if (video.duration) {
+    // Calcula el porcentaje reproducido
+    const percent = (video.currentTime / video.duration) * 100;
 
-        // Calcula el porcentaje reproducido (tiempo actual / duración total)
-        const percent = (video.currentTime / video.duration) * 100;
-
-        // Ajusta el ancho de la barra azul según el porcentaje
-        progressBar.style.width = percent + "%";
-    }
+    // Ajusta el ancho de la barra de progreso
+    progressBar.style.width = percent + "%";
 });
 
 
-// --------------------- SALTAR A UNA PARTE DEL VIDEO ---------------------
-
-// Evento cuando el usuario hace clic en la barra de progreso
+// --------------------- BARRA DE PROGRESO ---------------------
+// Evento al hacer clic en la barra de progreso
 progress.addEventListener("click", (e) => {
-
-    // Obtiene tamaño y posición de la barra en pantalla
+    // Obtiene la posición y tamaño de la barra
     const rect = progress.getBoundingClientRect();
 
-    // Calcula la posición exacta donde el usuario hizo clic
+    // Calcula la posición del clic dentro de la barra
     const clickX = e.clientX - rect.left;
 
-    // Convierte esa posición en tiempo del vídeo
-    const newTime = (clickX / rect.width) * video.duration;
-
-    // Cambia el tiempo actual del vídeo al nuevo tiempo calculado
-    video.currentTime = newTime;
+    // Calcula el tiempo correspondiente al clic
+    video.currentTime = (clickX / rect.width) * video.duration;
 });
 
 
-// --------------------- PICTURE-IN-PICTURE ---------------------
-
-// Evento para activar/desactivar el modo PiP
+// --------------------- PICTURE IN PICTURE ---------------------
+// Evento al hacer clic en el botón PiP
 pipBtn.addEventListener("click", async () => {
-
-    try {
-        // Si ya está en modo PiP, lo cierra
-        if (document.pictureInPictureElement) {
-            await document.exitPictureInPicture();
-
-        // Si no está en PiP, lo activa
-        } else {
-            await video.requestPictureInPicture();
-        }
-
-    } catch (error) {
-        // Si ocurre un error, lo muestra en consola
-        console.error("Error al activar Picture-in-Picture", error);
+    // Si ya está en PiP, sale
+    if (document.pictureInPictureElement) {
+        await document.exitPictureInPicture();
+    } else {
+        // Si no, entra en PiP
+        await video.requestPictureInPicture();
     }
 });
 
 
-// ===================== IMAGEN MODIFICABLE =====================
+// --------------------- FULLSCREEN ---------------------
+// Evento al hacer clic en el botón de pantalla completa
+fullscreenBtn.addEventListener("click", () => {
+    // Si no está en pantalla completa
+    if (!document.fullscreenElement) {
+        // Entra en pantalla completa
+        video.requestFullscreen();
+    } else {
+        // Si ya está, sale
+        document.exitFullscreen();
+    }
+});
 
+
+// --------------------- FUNCIÓN FORMATO TIEMPO ---------------------
+// Convierte segundos a formato mm:ss
+function formatTime(time) {
+    // Calcula los minutos
+    const m = Math.floor(time / 60);
+
+    // Calcula los segundos y los rellena con 0 si hace falta
+    const s = Math.floor(time % 60).toString().padStart(2, "0");
+
+    // Devuelve el tiempo formateado
+    return `${m}:${s}`;
+}
+
+
+// ===================== IMAGEN EDITABLE =====================
 // Obtiene la imagen editable
 const editableImg = document.getElementById("editable-img");
 
-// Variables que guardan el estado actual de la imagen
-let scale = 1;   // Tamaño inicial (1 = normal)
-let opacity = 1; // Opacidad inicial (1 = totalmente visible)
+// Valor inicial del zoom
+let scale = 1;
 
+// Valor inicial de la opacidad
+let opacity = 1;
 
-// --------------------- BOTÓN ZOOM ---------------------
+// Valor inicial de la rotación
+let rotation = 0;
 
-// Evento cuando se pulsa el botón Zoom
-document.getElementById("zoom").addEventListener("click", () => {
-
-    // Aumenta el tamaño en 0.2 cada vez
+// Evento al hacer clic en el botón de zoom
+document.getElementById("zoom").onclick = () => {
+    // Aumenta el zoom
     scale += 0.2;
 
-    // Aplica los cambios a la imagen
+    // Actualiza la imagen
     updateImage();
-});
+};
 
-
-// --------------------- BOTÓN OPACIDAD ---------------------
-
-// Evento cuando se pulsa el botón Opacidad
-document.getElementById("opacity").addEventListener("click", () => {
-
-    // Reduce la opacidad en 0.1
+// Evento al hacer clic en el botón de opacidad
+document.getElementById("opacity").onclick = () => {
+    // Reduce la opacidad
     opacity -= 0.1;
 
-    // Si llega a menos de 0.2, la reinicia a 1
+    // Si baja demasiado, vuelve a 1
     if (opacity < 0.2) opacity = 1;
 
-    // Aplica los cambios
+    // Actualiza la imagen
     updateImage();
-});
+};
 
+// Evento al hacer clic en el botón de rotar
+document.getElementById("rotate").onclick = () => {
+    // Aumenta la rotación en 15 grados
+    rotation += 15;
 
-// --------------------- BOTÓN RESET ---------------------
+    // Actualiza la imagen
+    updateImage();
+};
 
-// Evento cuando se pulsa el botón Reset
-document.getElementById("reset").addEventListener("click", () => {
-
-    // Restaura valores originales
+// Evento al hacer clic en el botón reset
+document.getElementById("reset").onclick = () => {
+    // Restaura los valores iniciales
     scale = 1;
     opacity = 1;
+    rotation = 0;
 
-    // Aplica los cambios
+    // Actualiza la imagen
     updateImage();
-});
+};
 
-
-// --------------------- FUNCIÓN QUE ACTUALIZA LA IMAGEN ---------------------
-
+// Función que aplica los cambios visuales a la imagen
 function updateImage() {
+    // Aplica zoom y rotación
+    editableImg.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
 
-    // Aplica el zoom usando transform: scale()
-    editableImg.style.transform = `scale(${scale})`;
-
-    // Aplica la opacidad
+    // Aplica opacidad
     editableImg.style.opacity = opacity;
 }
+
+
+// ===================== AUDIO AVANZADO =====================
+// Obtiene el elemento del audio avanzado
+const audio2 = document.getElementById("audio2");
+
+// Obtiene el botón de reproducción/pausa
+const audioPlayBtn = document.getElementById("audioPlay");
+
+// Obtiene el control deslizante de velocidad
+const speedControl = document.getElementById("speed");
+
+// Obtiene el control deslizante de tono
+const pitchControl = document.getElementById("pitch");
+
+// --------------------- PLAY / PAUSE ---------------------
+// Evento al hacer clic en el botón de play/pause
+audioPlayBtn.addEventListener("click", () => {
+    // Si el audio está pausado, lo reproduce; si no, lo pausa
+    audio2.paused ? audio2.play() : audio2.pause();
+});
+
+// --------------------- CONTROL DE TONO ---------------------
+// Evento al mover el slider de tono
+pitchControl.addEventListener("input", () => {
+    // Permite modificar el tono real del audio
+    audio2.preservesPitch = false;
+
+    // Ajusta el tono modificando la velocidad de reproducción
+    audio2.playbackRate = pitchControl.value;
+});
+
+// --------------------- CAMBIO DE ICONOS ---------------------
+// Cuando el audio empieza a reproducirse, cambia el icono a pausa y play
+audio2.addEventListener("play", () => audioPlayBtn.textContent = "⏸️");
+audio2.addEventListener("pause", () => audioPlayBtn.textContent = "▶️");
+
+// --------------------- CONTROL DE VELOCIDAD ---------------------
+// Evento al mover el slider de velocidad
+speedControl.addEventListener("input", () => {
+    // Cambia la velocidad de reproducción del audio
+    audio2.playbackRate = speedControl.value;
+});
