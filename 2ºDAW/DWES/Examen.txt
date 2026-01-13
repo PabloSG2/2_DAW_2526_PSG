@@ -9,3 +9,7 @@ se puede poner <form> y luego input y te lo hace
 
 Para fallo XAMPP (PHPMYadmin)
 carpeta backup y copia de data
+
+
+*Tema Laravel*
+Cuando da fallo por .env hay que encender el xampp
