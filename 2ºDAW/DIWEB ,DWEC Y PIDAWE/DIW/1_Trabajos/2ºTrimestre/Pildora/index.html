@@ -7,60 +7,56 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
 <h1>Gestión Multimedia en HTML5</h1>
 
 <!-- ===================== AUDIOS ===================== -->
 <div class="media-container">
-    <h2>🎵 Audios HTML5 (Normal + Avanzado)</h2>
+    <h2>🎵 Audios HTML5</h2>
 
     <!-- Audio normal -->
-    <div class="audio-box">
-        <h3>Audio HTML5</h3>
-        <audio controls preload="none">
-            <source src="sonido/audio.mp3" type="audio/mpeg">
-            Tu navegador no soporta audio HTML5.
-        </audio>
-    </div>
+    <audio controls preload="none">
+        <source src="sonido/audio.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- Audio personalizado -->
-    <div class="audio-box">
-        <h3>Audio con controles avanzados</h3>
+    <!-- Audio avanzado -->
+    <audio id="audio2" preload="metadata">
+        <source src="sonido/audio1.mp3" type="audio/mpeg">
+    </audio>
 
-        <audio id="audio2" preload="metadata">
-            <source src="sonido/audio1.mp3" type="audio/mpeg">
-        </audio>
+    <div class="controls">
+        <button id="audioPlay">▶️</button>
 
-        <div class="controls">
-            <button id="audioPlay">▶️</button>
-            <label>Tono / Velocidad:
-                <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
-            </label>
-            <label>Velocidad:
-                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
-            </label>
-            <a href="sonido/audio.mp3" download>
-                <button>⬇️ Descargar</button>
-            </a>
+        <label>Velocidad
+            <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+        </label>
+
+       <button id="loopBtn">🔁 Loop OFF</button>
+
+        <div class="time">
+            <span id="audioCurrent">0:00</span> /
+            <span id="audioDuration">0:00</span>
+        </div>
+
+        <div class="progress" id="audioProgress">
+            <div class="progress-bar" id="audioProgressBar"></div>
         </div>
     </div>
 </div>
 
-
 <!-- ===================== VIDEOS ===================== -->
 <div class="media-container row">
-    
-    <!-- Video sin modificar -->
+
+    <!-- Video normal -->
     <div class="col">
         <h2>🎥 Vídeo sin modificar</h2>
-        <video controls width="100%">
+        <video controls>
             <source src="sonido/video.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Video con controles personalizados -->
+    <!-- Video avanzado -->
     <div class="col">
-        <h2>🎬 Vídeo con controles personalizados</h2>
+        <h2>🎬 Vídeo personalizado</h2>
 
         <video id="video" preload="metadata">
             <source src="sonido/video1.mp4" type="video/mp4">
@@ -69,7 +65,7 @@
         <div class="controls">
             <button id="play">▶️</button>
             <button id="mute">🔇</button>
-            <button id="pip">🖼️ PiP</button>
+            <button id="pip">🖼️</button>
             <button id="fullscreen">⛶</button>
 
             <div class="time">
@@ -81,7 +77,7 @@
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
 
-            <label>Volumen:
+            <label>Volumen
                 <input type="range" id="volume" min="0" max="1" step="0.05" value="1">
             </label>
         </div>
@@ -92,22 +88,22 @@
 <div class="media-container row">
 
     <div class="col">
-        <h2>🖼️ Imagen sin modificar</h2>
-        <img src="sonido/imagen.jpg" class="static-img">
+        <h2>🖼️ Imagen normal</h2>
+        <img src="sonido/imagen.jpg">
     </div>
 
     <div class="col">
-        <h2>🖌️ Imagen modificable</h2>
+        <h2>🖌️ Imagen editable</h2>
 
         <div class="img-wrapper">
             <img id="editable-img" src="sonido/imagen1.jpg">
         </div>
 
         <div class="controls">
-            <button id="zoom">🔍 Zoom</button>
-            <button id="opacity">🌫️ Opacidad</button>
-            <button id="rotate">🔄 Rotar</button>
-            <button id="reset">♻️ Reset</button>
+            <button id="zoom">🔍</button>
+            <button id="opacity">🌫️</button>
+            <button id="rotate">🔄</button>
+            <button id="reset">♻️</button>
         </div>
     </div>
 </div>

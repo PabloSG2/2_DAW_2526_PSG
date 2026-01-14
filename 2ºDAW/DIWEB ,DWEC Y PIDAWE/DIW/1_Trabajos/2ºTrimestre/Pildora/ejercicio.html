@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Multimedia Simple</title>
+<style>
+    /* ======== ESTILO GENERAL DE LA PÁGINA ======== */
+    body {
+        font-family: Arial;          /* Fuente simple y legible */
+        padding: 20px;               /* Espaciado alrededor del contenido */
+        background: #eef4ff;         /* Fondo azul muy suave */
+    }
+
+    /* Títulos de cada sección */
+    h2 { 
+        color: #2a4d8f;              /* Azul bonito */
+    }
+
+    /* Caja que envuelve cada bloque multimedia */
+    .box {
+        background: white;           /* Fondo blanco */
+        padding: 15px;               /* Espaciado interno */
+        border-radius: 10px;         /* Bordes redondeados */
+        max-width: 400px;            /* Ancho máximo */
+        margin-bottom: 25px;         /* Separación entre bloques */
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Sombra suave */
+    }
+
+    /* Estilo común para audio, video e imagen */
+    video, img, audio {
+        width: 100%;                 /* Que ocupen todo el ancho */
+        border-radius: 8px;          /* Bordes redondeados */
+        margin-bottom: 10px;         /* Separación inferior */
+    }
+
+    /* Botones generales */
+    button {
+        padding: 8px 12px;           /* Tamaño del botón */
+        background: #2a4d8f;         /* Azul */
+        color: white;                /* Texto blanco */
+        border: none;                /* Sin borde */
+        border-radius: 6px;          /* Bordes redondeados */
+        cursor: pointer;             /* Cursor de mano */
+        font-weight: bold;           /* Texto en negrita */
+    }
+
+    /* Efecto al pasar el ratón */
+    button:hover {
+        background: #1d3563;         /* Azul más oscuro */
+    }
+
+    /* Imagen con animación suave para el zoom */
+    img { 
+        transition: 0.3s;            /* Animación suave al hacer zoom */
+    }
+</style>
+</head>
+<body>
+
+<!-- ===================== AUDIO ===================== -->
+<h2>Audio</h2>
+<div class="box">
+    <!-- Audio sin controles, lo controlamos con JS -->
+    <audio id="audio">
+        <source src="sonido/audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botón para reproducir/pausar -->
+    <button id="audioPlay">Play</button>
+</div>
+
+<!-- ===================== VIDEO SIN MODIFICAR ===================== -->
+<h2>Vídeo sin modificar</h2>
+<div class="box">
+    <!-- Vídeo con controles nativos -->
+    <video controls>
+        <source src="sonido/video.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- ===================== IMAGEN ===================== -->
+<h2>Imagen</h2>
+<div class="box">
+    <!-- Imagen editable -->
+    <img id="img" src="sonido/imagen.jpg">
+
+    <!-- Botón para hacer zoom -->
+    <button id="zoomBtn">Zoom</button>
+</div>
+
+<script>
+/* ===================== AUDIO ===================== */
+/* Obtenemos el elemento del audio */
+const audio = document.getElementById("audio");
+
+/* Obtenemos el botón de Play/Pause */
+const audioPlay = document.getElementById("audioPlay");
+
+/* Evento al hacer clic en el botón */
+audioPlay.onclick = () => {
+    /* Si está pausado → reproducir, si está reproduciendo → pausar */
+    audio.paused ? audio.play() : audio.pause();
+
+    /* Cambiar el texto del botón según el estado */
+    audioPlay.textContent = audio.paused ? "Play" : "Pause";
+};
+
+/* ===================== IMAGEN (ZOOM) ===================== */
+/* Obtenemos la imagen */
+const img = document.getElementById("img");
+
+/* Obtenemos el botón de zoom */
+const zoomBtn = document.getElementById("zoomBtn");
+
+/* Variable para guardar el nivel de zoom */
+let scale = 1;
+
+/* Evento al hacer clic en el botón de zoom */
+zoomBtn.onclick = () => {
+    scale += 0.2;          /* Aumenta el zoom */
+
+    if (scale > 2) scale = 1;  /* Si pasa de 2x, vuelve a 1x */
+
+    /* Aplicamos el zoom a la imagen */
+    img.style.transform = `scale(${scale})`;
+};
+</script>
+</body>
+</html>

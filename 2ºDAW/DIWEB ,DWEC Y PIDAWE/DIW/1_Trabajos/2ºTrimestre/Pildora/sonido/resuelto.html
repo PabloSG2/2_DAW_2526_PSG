@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio Multimedia Completo</title>
+<style>
+    /* ======== ESTILO GENERAL DE LA PÁGINA ======== */
+    body {
+        font-family: Arial;          /* Fuente simple y legible */
+        padding: 20px;               /* Espaciado general */
+        background: #eef4ff;         /* Fondo azul muy suave */
+    }
+
+    /* Títulos de cada sección */
+    h2 { 
+        color: #2a4d8f;              /* Azul elegante */
+    }
+
+    /* Caja que envuelve cada bloque multimedia */
+    .box {
+        background: white;           /* Fondo blanco */
+        padding: 15px;               /* Espaciado interno */
+        border-radius: 10px;         /* Bordes redondeados */
+        max-width: 450px;            /* Ancho máximo */
+        margin-bottom: 25px;         /* Separación entre bloques */
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Sombra suave */
+    }
+
+    /* Estilo común para audio, video e imagen */
+    video, img, audio {
+        width: 100%;                 /* Ocupa todo el ancho */
+        border-radius: 8px;          /* Bordes redondeados */
+        margin-bottom: 10px;         /* Separación inferior */
+    }
+
+    /* Botones generales */
+    button {
+        padding: 8px 12px;           /* Tamaño del botón */
+        background: #2a4d8f;         /* Azul */
+        color: white;                /* Texto blanco */
+        border: none;                /* Sin borde */
+        border-radius: 6px;          /* Bordes redondeados */
+        cursor: pointer;             /* Cursor de mano */
+        font-weight: bold;           /* Texto en negrita */
+        margin-right: 5px;           /* Separación entre botones */
+    }
+
+    /* Efecto al pasar el ratón */
+    button:hover {
+        background: #1d3563;         /* Azul más oscuro */
+    }
+
+    /* Imagen con animación suave para el zoom */
+    img { 
+        transition: 0.3s;            /* Animación suave al hacer zoom */
+    }
+</style>
+</head>
+<body>
+
+<!-- ===================== AUDIO ===================== -->
+<h2>Audio</h2>
+<div class="box">
+    <!-- Audio sin controles nativos -->
+    <audio id="audio">
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botón Play/Pause -->
+    <button id="audioPlay">Play</button>
+
+    <!-- Control de velocidad -->
+    <label>
+        Velocidad:
+        <input type="range" id="audioSpeed" min="0.5" max="2" step="0.1" value="1">
+    </label>
+</div>
+
+<!-- ===================== VIDEO ===================== -->
+<h2>Vídeo</h2>
+<div class="box">
+
+    <!-- Vídeo con controles nativos -->
+    <video id="video" controls>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+
+    <!-- Botón Fullscreen -->
+    <button id="fullscreenBtn">⛶ Pantalla completa</button>
+
+    <!-- Botón Picture-in-Picture EXACTO como tú lo tienes -->
+    <button id="pip">🖼️</button>
+</div>
+
+<!-- ===================== IMAGEN ===================== -->
+<h2>Imagen</h2>
+<div class="box">
+    <!-- Imagen editable -->
+    <img id="img" src="imagen1.jpg">
+
+    <!-- Botones -->
+    <button id="zoomBtn">Zoom</button>
+    <button id="resetBtn">Reset</button>
+</div>
+
+<script>
+/* ===================== AUDIO ================================ */
+/* Obtenemos el elemento del audio */
+const audio = document.getElementById("audio");
+
+/* Botón Play/Pause */
+const audioPlay = document.getElementById("audioPlay");
+
+/* Slider de velocidad */
+const audioSpeed = document.getElementById("audioSpeed");
+
+/* Evento: reproducir o pausar el audio */
+audioPlay.onclick = () => {
+    audio.paused ? audio.play() : audio.pause();
+    audioPlay.textContent = audio.paused ? "Play" : "Pause";  /* Cambia texto */
+};
+
+/* Evento: cambiar velocidad del audio */
+audioSpeed.oninput = () => {
+    audio.playbackRate = audioSpeed.value;  /* Ajusta velocidad */
+};
+
+
+/* ===================== VIDEO ================================ */
+
+/* Obtenemos el vídeo */
+const video = document.getElementById("video");
+
+/* Botón fullscreen */
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+
+/* Botón Picture-in-Picture EXACTO como tú lo tienes */
+const pipBtn = document.getElementById("pip");
+
+/* Evento: activar pantalla completa */
+fullscreenBtn.onclick = () => {
+    video.requestFullscreen();  /* Pone el vídeo a pantalla completa */
+};
+
+/* Evento: activar Picture-in-Picture con tu lógica */
+pipBtn.addEventListener("click", async () => {
+    if (document.pictureInPictureElement) {
+        await document.exitPictureInPicture();  /* Sale de PiP */
+    } else {
+        await video.requestPictureInPicture();  /* Entra en PiP */
+    }
+});
+
+
+/* ===================== IMAGEN =============================== */
+
+/* Obtenemos la imagen */
+const img = document.getElementById("img");
+
+/* Botones */
+const zoomBtn = document.getElementById("zoomBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+/* Variable para guardar el nivel de zoom */
+let scale = 1;
+
+/* Evento: aumentar zoom */
+zoomBtn.onclick = () => {
+    scale += 0.2;                     /* Aumenta zoom */
+    img.style.transform = `scale(${scale})`;
+};
+
+/* Evento: resetear imagen */
+resetBtn.onclick = () => {
+    scale = 1;                        /* Vuelve al tamaño original */
+    img.style.transform = "scale(1)";
+};
+</script>
+</body>
+</html>
