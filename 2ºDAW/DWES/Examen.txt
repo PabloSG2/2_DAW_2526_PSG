@@ -12,4 +12,6 @@ carpeta backup y copia de data
 
 
 *Tema Laravel*
-Cuando da fallo por .env hay que encender el xampp
+Cuando da fallo por .env hay que encender el XAMPP
+Para crear modelo: php artisan make:model nombre -m
+luego php artisan migrate:rollback y php artisan migrate para resetear

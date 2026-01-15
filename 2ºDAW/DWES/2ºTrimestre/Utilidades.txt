@@ -1,1 +1,0 @@
-Cuando da fallo por .env hay que encender el xampp
