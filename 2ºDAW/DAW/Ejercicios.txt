@@ -1,3 +1,5 @@
 Terminar práctica (3.3 de proftpd y vsftpd)
 
 CONTROL+F en archivos busca
+
+apt get install apache2 utils
