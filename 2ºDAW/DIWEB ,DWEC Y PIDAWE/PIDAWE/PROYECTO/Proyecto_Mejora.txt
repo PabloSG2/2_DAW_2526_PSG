@@ -34,6 +34,7 @@ Crear el código MYSQL y luego hacer el diagrama
 ---------------PROYECTO---------------
 Hay que decidir que hacer con las imágenes si almacenar una imagen en un repositorio o localmente
 Las dos se guardaría o enlace o foto en la base de datos
+(Para las imágenes también se puede ir a php.ini {en xampp} para reducir o etc)
 
 *Actualización del Proyecto*
 Modificar el análisis de requisitos:
