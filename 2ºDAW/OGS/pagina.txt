@@ -6,3 +6,6 @@ d24pablo constraseña: la de siempre
 d24pablo@iac.mooo.com (Puerto 54245)
 
 mirar fallo grep "usuario" /var/log/apache2/error.log/tail
+
+//Para ejecutar Phyton cpara el juego
+https://trinket.io/pygame?utm_source=copilot.com
