@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Quiz Cofrade – Semana Santa de Sevilla</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1300px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.left-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+button {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.input-row {
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1em;
+}
+
+.progress {
+  font-size: 0.9em;
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #ddd;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  height: 28px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.correct {
+  background: #c8f7c5;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Quiz Cofrade – Semana Santa de Sevilla</h1>
+
+<div class="top-bar">
+  <div class="left-controls">
+    <span class="timer" id="timer">5:00</span>
+    <button id="pause-btn">Pausar</button>
+    <button id="reset-btn">Reiniciar</button>
+  </div>
+  <button id="mode-btn">Sin tiempo</button>
+</div>
+
+<div class="input-row">
+  <input type="text" id="input" placeholder="Escribe respuesta aquí">
+</div>
+
+<div class="progress" id="progress">0 / 73 adivinados</div>
+
+<table id="tabla"></table>
+
+</div>
+
+<script>
+/* ===== DATOS ===== */
+
+const dias = {
+  "Viernes de Dolores": ["Bendición y Esperanza","Pino Montano","La Misión","Bellavista","La Corona","Pasión y Muerte"],
+  "Sábado de Pasión": ["Padre Pío","La Milagrosa","Torreblanca","San José Obrero","Divino Perdón"],
+  "Domingo de Ramos": ["La Borriquita","Jesús Despojado","La Hiniesta","La Paz","La Cena","San Roque","La Amargura","La Estrella","El Amor"],
+  "Lunes Santo": ["San Pablo","La Redención","Santa Genoveva","Santa Marta","San Gonzalo","VeraCruz","Las Penas","Las Aguas","El Museo"],
+  "Martes Santo": ["El Cerro del Águila","San Benito","El Dulce Nombre","La Candelaria","San Esteban","Los Javieres","Los Estudiantes","Santa Cruz"],
+  "Miércoles Santo": ["El Carmen","La Sed","El Buen Fin","San Bernardo","La Lanzada","El Baratillo","Los Panaderos","Las Siete Palabras","El Cristo de Burgos"],
+  "Jueves Santo": ["Los Negritos","La Exaltación","Las Cigarreras","Montesión","La Quinta Angustia","El Valle","Pasión"],
+  "Madrugada": ["El Silencio","El Gran Poder","La Macarena","El Calvario","Esperanza de Triana","Los Gitanos"],
+  "Viernes Santo": ["La Carretería","La Soledad de San Buenaventura","El Cachorro","La O","San Isidoro","Montserrat","La Mortaja"],
+  "Sábado Santo": ["El Sol","Los Servitas","La Trinidad","Santo Entierro","Soledad de San Lorenzo"],
+  "Domingo de Resurrección": ["La Resurrección"]
+};
+
+const TOTAL = 73;
+
+/* ===== UTIL ===== */
+
+function normalizar(txt) {
+  return txt.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-zñ\s]/g,"")
+    .trim();
+}
+
+/* ===== TABLA ===== */
+
+const tabla = document.getElementById("tabla");
+
+function construirTabla() {
+  tabla.innerHTML = "";
+  let head = "<tr>";
+  Object.keys(dias).forEach(d => head += `<th>${d}</th>`);
+  head += "</tr>";
+  tabla.innerHTML += head;
+
+  for (let i = 0; i < 9; i++) {
+    let row = "<tr>";
+    Object.keys(dias).forEach(d => row += `<td data-dia="${d}" data-i="${i}"></td>`);
+    row += "</tr>";
+    tabla.innerHTML += row;
+  }
+}
+
+construirTabla();
+
+/* ===== ESTADO ===== */
+
+let aciertos = 0;
+let acertadas = new Set();
+let modoLibre = false;
+let tiempo = 300;
+let pausado = false;
+
+/* ===== RESET ===== */
+
+function resetearTodo() {
+  aciertos = 0;
+  acertadas.clear();
+  document.getElementById("progress").textContent = `0 / ${TOTAL} adivinados`;
+  construirTabla();
+  tiempo = 300;
+  actualizarTiempo();
+  pausado = false;
+  pauseBtn.textContent = "Pausar";
+  input.disabled = false;
+}
+
+/* ===== INPUT ===== */
+
+const input = document.getElementById("input");
+
+input.addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+
+  const txt = normalizar(input.value);
+  if (!txt || acertadas.has(txt)) return;
+
+  Object.keys(dias).forEach(dia => {
+    dias[dia].forEach((h, i) => {
+      if (normalizar(h) === txt) {
+        const celda = document.querySelector(`td[data-dia="${dia}"][data-i="${i}"]`);
+        celda.textContent = h;
+        celda.classList.add("correct");
+        acertadas.add(txt);
+        aciertos++;
+        document.getElementById("progress").textContent =
+          `${aciertos} / ${TOTAL} adivinados`;
+      }
+    });
+  });
+
+  input.value = "";
+});
+
+/* ===== TEMPORIZADOR ===== */
+
+const timer = document.getElementById("timer");
+
+function actualizarTiempo() {
+  const m = Math.floor(tiempo / 60);
+  const s = tiempo % 60;
+  timer.textContent = `${m}:${s.toString().padStart(2,"0")}`;
+}
+
+actualizarTiempo();
+
+setInterval(() => {
+  if (modoLibre || pausado) return;
+  tiempo--;
+  actualizarTiempo();
+  if (tiempo <= 0) {
+    input.disabled = true;
+  }
+}, 1000);
+
+/* ===== BOTONES ===== */
+
+const pauseBtn = document.getElementById("pause-btn");
+const resetBtn = document.getElementById("reset-btn");
+const modeBtn  = document.getElementById("mode-btn");
+
+pauseBtn.onclick = () => {
+  if (modoLibre) return;
+  pausado = !pausado;
+  pauseBtn.textContent = pausado ? "Reanudar" : "Pausar";
+};
+
+resetBtn.onclick = () => {
+  modoLibre = false;
+  modeBtn.textContent = "Sin tiempo";
+  resetearTodo();
+};
+
+modeBtn.onclick = () => {
+  modoLibre = !modoLibre;
+
+  if (modoLibre) {
+    timer.textContent = "Sin tiempo";
+    pauseBtn.textContent = "Pausar";
+    pausado = false;
+    modeBtn.textContent = "Con tiempo";
+  } else {
+    modeBtn.textContent = "Sin tiempo";
+    resetearTodo();
+  }
+};
+</script>
+
+</body>
+</html>

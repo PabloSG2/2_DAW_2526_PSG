@@ -4,6 +4,7 @@ Portapapeles: Windows + V  Control+Alt+4 : ~
 Fastone (Usuario: damas y Comstraseña: PXWQD-RXMVZ-XYAYZ-EAVVJ)
 Alt+Mayu+shift+flecha visual studio copia linea debajo
 
+amazon precio: keppa para ver el precio de cada cosa en un tiempo
 
 manzdev (HTML, css y JavaScript)
 https://www.jscamp.dev/ (Pagina para ayudar en CSS+HTML+JavaScript)
