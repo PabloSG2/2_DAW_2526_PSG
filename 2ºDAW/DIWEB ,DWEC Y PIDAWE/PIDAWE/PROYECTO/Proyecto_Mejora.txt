@@ -47,3 +47,20 @@ Modificar el análisis de requisitos:
 8.Anexos (solo se apuntaría cosas importante(información extra por ejemplo "código")
 Insertar datos relevantes con respecto a usuarios, contraseñas
 
+--PROYECTO MEJORA 10/02/2026--
+6.4 Ejecución de pruebas:
+	-Se necesita introducción de la investigación de las pruebas que se puede hacer al 	software del proyecto
+	-Ejemplo: descripción antes de comenzar
+		-Tipo de prueba, 
+			:descripción general, parámetros(TABLA) y una captura
+		Cuales voy a realizar: (por ejemplo test unitario, seguridad y rendimiento)
+	
+	Ejemplo de rendimiento
+	----------|---------------------------|---------------------------
+	Conexiones 1 (conecta 1000 usuarios)    2 (conecta 10000 usuarios)  
+	item2		x			x
+
+6.3 Codificación:
+	-Modificar el proyecto a MVC con las carpetas
+
+Documentación en APA-7 para pedir cosas y enlaces
