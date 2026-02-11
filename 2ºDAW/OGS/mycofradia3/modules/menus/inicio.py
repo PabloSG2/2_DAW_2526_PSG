@@ -1,31 +1,60 @@
 import pygame
-from core.botones import Boton, get_fuente
+from core.botones import BotonSimple, get_fuente
 from config import COLORES
 
 def menu_inicio(VENTANA, estado):
+    try:
+        fondo = pygame.image.load("assets/img/fondo_menu.png").convert()
+        fondo = pygame.transform.smoothscale(fondo, VENTANA.get_size())
+    except:
+        fondo = None
+
+    try:
+        logo = pygame.image.load("assets/img/logo.png").convert_alpha()
+    except:
+        logo = None
+
     botones = [
-        Boton((60, 200, 200, 50), "Hermanos"),
-        Boton((60, 260, 200, 50), "Economía"),
-        Boton((60, 320, 200, 50), "Cultos"),
-        Boton((60, 380, 200, 50), "Ensayos"),
-        Boton((60, 440, 200, 50), "Procesión"),
-        Boton((60, 500, 200, 50), "Ajustes"),
-        Boton((650, 500, 180, 50), "Salir"),
+        ("Hermanos", "hermanos"),
+        ("Titulares", "titulares"),
+        ("Cultos", "cultos"),
+        ("Economía", "economia"),
+        ("Ensayos", "ensayos"),
+        ("Procesión", "procesion"),
+        ("Ajustes", "ajustes"),
+        ("Salir", "salir"),
     ]
 
+    botones_ui = []
+    x = 100
+    y = 260
+    ancho = 200
+    alto = 55
+    sep = 220
+
+    for texto, destino in botones:
+        botones_ui.append((BotonSimple((x, y, ancho, alto), texto), destino))
+        x += sep
+        if x + ancho > VENTANA.get_width() - 100:
+            x = 100
+            y += 90
+
     while True:
-        VENTANA.fill(COLORES["fondo_inicio"])
+        if fondo:
+            VENTANA.blit(fondo, (0, 0))
+        else:
+            VENTANA.fill(COLORES["fondo"])
 
-        fuente_titulo = get_fuente(40, True)
-        titulo = fuente_titulo.render("MYCOFRADÍA 3", True, COLORES["dorado"])
-        VENTANA.blit(titulo, (280, 80))
+        if logo:
+            rect = logo.get_rect(center=(VENTANA.get_width()//2, 150))
+            VENTANA.blit(logo, rect)
+        else:
+            fuente = get_fuente(40, True)
+            t = fuente.render("MYCOFRADÍA 2+", True, COLORES["dorado"])
+            VENTANA.blit(t, (VENTANA.get_width()//2 - t.get_width()//2, 140))
 
-        fuente_sub = get_fuente(18, False)
-        sub = fuente_sub.render("Gestión integral de la hermandad", True, COLORES["texto"])
-        VENTANA.blit(sub, (300, 130))
-
-        for b in botones:
-            b.dibujar(VENTANA)
+        for boton, destino in botones_ui:
+            boton.dibujar(VENTANA)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -34,20 +63,11 @@ def menu_inicio(VENTANA, estado):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if botones[0].clicado(pos):
-                    return "hermanos"
-                if botones[1].clicado(pos):
-                    return "economia"
-                if botones[2].clicado(pos):
-                    return "cultos"
-                if botones[3].clicado(pos):
-                    return "ensayos"
-                if botones[4].clicado(pos):
-                    return "procesion"
-                if botones[5].clicado(pos):
-                    return "ajustes"
-                if botones[6].clicado(pos):
-                    pygame.quit()
-                    exit()
+                for boton, destino in botones_ui:
+                    if boton.clicado(pos):
+                        if destino == "salir":
+                            pygame.quit()
+                            exit()
+                        return destino
 
         pygame.display.update()

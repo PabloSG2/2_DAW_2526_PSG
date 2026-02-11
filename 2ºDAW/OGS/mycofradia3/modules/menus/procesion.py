@@ -1,7 +1,7 @@
 import pygame
 import random
-from core.botones import Boton, get_fuente
-from core.ui import dibujar_titulo, dibujar_panel, dibujar_texto
+from core.botones import BotonSimple, get_fuente
+from core.ui import dibujar_titulo
 from config import COLORES
 
 # -----------------------------
@@ -18,7 +18,7 @@ GIRO_IZQ = "giro_izq"
 GIRO_DER = "giro_der"
 
 # -----------------------------
-# Clase Paso (Cristo / Virgen)
+# Clase Paso
 # -----------------------------
 class Paso:
     def __init__(self, x, y, tipo):
@@ -64,43 +64,32 @@ class Paso:
         if self.estado == FRONTAL:
             self.vel = min(self.max_vel, self.vel + self.acel)
             self.y -= self.vel
-
         elif self.estado == ATRAS:
             self.vel = min(self.max_vel, self.vel + self.acel)
             self.y += self.vel * 0.7
-
         elif self.estado == IZQUIERDA:
             self.vel = min(self.max_vel, self.vel + self.acel)
             self.x -= self.vel * 0.5
-
         elif self.estado == DERECHA:
             self.vel = min(self.max_vel, self.vel + self.acel)
             self.x += self.vel * 0.5
-
         elif self.estado == COSTERO_IZQ:
             self.vel = min(self.max_vel, self.vel + self.acel)
             self.x -= self.vel * self.costero_factor
             self.y -= self.vel * (1 - self.costero_factor)
-
         elif self.estado == COSTERO_DER:
             self.vel = min(self.max_vel, self.vel + self.acel)
             self.x += self.vel * self.costero_factor
             self.y -= self.vel * (1 - self.costero_factor)
-
         elif self.estado == GIRO_IZQ:
             self.angulo -= self.giro
-
         elif self.estado == GIRO_DER:
             self.angulo += self.giro
-
         else:
             if self.vel > 0:
                 self.vel -= 0.02
             if self.vel < 0:
                 self.vel = 0
-
-        self.x = max(120, min(780, self.x))
-        self.y = max(140, min(460, self.y))
 
 # -----------------------------
 # Capataz
@@ -122,13 +111,15 @@ class Capataz:
             if self.timer_brazo <= 0:
                 self.brazo_arriba = False
 
-    def dibujar(self, ventana):
-        pygame.draw.rect(ventana, (220, 220, 220), (self.x - 10, self.y - 30, 20, 30))
-        pygame.draw.circle(ventana, (230, 220, 200), (self.x, self.y - 40), 10)
+    def dibujar(self, ventana, cam_x, cam_y):
+        sx = self.x - cam_x
+        sy = self.y - cam_y
+        pygame.draw.rect(ventana, (220, 220, 220), (sx - 10, sy - 30, 20, 30))
+        pygame.draw.circle(ventana, (230, 220, 200), (sx, sy - 40), 10)
         if self.brazo_arriba:
-            pygame.draw.line(ventana, (230, 220, 200), (self.x, self.y - 20), (self.x + 20, self.y - 50), 4)
+            pygame.draw.line(ventana, (230, 220, 200), (sx, sy - 20), (sx + 20, sy - 50), 4)
         else:
-            pygame.draw.line(ventana, (230, 220, 200), (self.x, self.y - 20), (self.x + 20, self.y - 10), 4)
+            pygame.draw.line(ventana, (230, 220, 200), (sx, sy - 20), (sx + 20, sy - 10), 4)
 
 # -----------------------------
 # Costaleros visuales
@@ -138,37 +129,80 @@ class CostaleroVisual:
         self.offset_x = offset_x
         self.offset_y = offset_y
 
-    def pos(self, paso: Paso):
-        return (paso.x + self.offset_x, paso.y + self.offset_y - paso.altura // 2)
+    def pos(self, paso, cam_x, cam_y):
+        return (
+            paso.x + self.offset_x - cam_x,
+            paso.y + self.offset_y - cam_y - paso.altura // 2
+        )
 
 def crear_cuadrilla_visual(tipo):
-    costaleros_visuales = []
+    costaleros = []
     filas = 3 if tipo == "cristo" else 2
     por_fila = 6 if tipo == "cristo" else 5
     sep_x = 30
     sep_y = 18
     inicio_x = - (por_fila - 1) * sep_x // 2
     inicio_y = -10
+
     for f in range(filas):
         for i in range(por_fila):
             ox = inicio_x + i * sep_x
             oy = inicio_y + f * sep_y
-            costaleros_visuales.append(CostaleroVisual(ox, oy))
-    return costaleros_visuales
+            costaleros.append(CostaleroVisual(ox, oy))
+
+    return costaleros
 
 # -----------------------------
-# Selección de Cristo / Virgen
+# Selección de modo (ESTILO MYCOFRADÍA2)
+# -----------------------------
+def seleccionar_modo(VENTANA):
+    ancho = 260
+    alto = 70
+    x = VENTANA.get_width() // 2 - ancho // 2
+
+    boton_recorrido = BotonSimple((x, 240, ancho, alto), "RECORRIDO")
+    boton_ensayo = BotonSimple((x, 330, ancho, alto), "ENSAYO LIBRE")
+    boton_volver = BotonSimple((x, 420, ancho, alto), "VOLVER")
+
+    while True:
+        VENTANA.fill(COLORES["fondo_procesion"])
+        dibujar_titulo(VENTANA, "MODO DE PROCESIÓN", y=120)
+
+        boton_recorrido.dibujar(VENTANA)
+        boton_ensayo.dibujar(VENTANA)
+        boton_volver.dibujar(VENTANA)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if boton_recorrido.clicado(pos):
+                    return "recorrido"
+                if boton_ensayo.clicado(pos):
+                    return "ensayo"
+                if boton_volver.clicado(pos):
+                    return None
+
+        pygame.display.update()
+
+# -----------------------------
+# Selección de tipo de paso
 # -----------------------------
 def seleccionar_tipo_paso(VENTANA, estado):
-    boton_cristo = Boton((220, 260, 200, 60), "Cristo", color_fondo=(80, 40, 140))
-    boton_virgen = Boton((480, 260, 200, 60), "Virgen", color_fondo=(80, 40, 140))
-    boton_volver = Boton((20, 20, 180, 55), "Volver", color_fondo=(180, 40, 40))
+    ancho = 260
+    alto = 70
+    x = VENTANA.get_width() // 2 - ancho // 2
+
+    boton_cristo = BotonSimple((x, 260, ancho, alto), "CRISTO")
+    boton_virgen = BotonSimple((x, 350, ancho, alto), "VIRGEN")
+    boton_volver = BotonSimple((x, 440, ancho, alto), "VOLVER")
 
     while True:
         VENTANA.fill(COLORES["fondo_procesion"])
         dibujar_titulo(VENTANA, "SELECCIONAR PASO", y=120)
-
-        dibujar_texto(VENTANA, "Elige el tipo de paso para el ensayo:", 220, 210)
 
         boton_cristo.dibujar(VENTANA)
         boton_virgen.dibujar(VENTANA)
@@ -178,40 +212,62 @@ def seleccionar_tipo_paso(VENTANA, estado):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if boton_cristo.clicado(pos):
                     estado["tipo_paso"] = "cristo"
-                    return
+                    return True
                 if boton_virgen.clicado(pos):
                     estado["tipo_paso"] = "virgen"
-                    return
+                    return True
                 if boton_volver.clicado(pos):
-                    return
+                    return False
 
         pygame.display.update()
 
 # -----------------------------
-# Ensayo avanzado (Procesión)
+# Cargar mapa
 # -----------------------------
-def menu_procesion(VENTANA, estado):
-    seleccionar_tipo_paso(VENTANA, estado)
+def cargar_mapa():
+    try:
+        mapa = pygame.image.load("assets/mapas/recorrido_urbano.png").convert()
+    except:
+        mapa = pygame.Surface((1600, 1200))
+        mapa.fill((40, 40, 40))
+    return mapa
+
+# -----------------------------
+# Cámara
+# -----------------------------
+def calcular_camara(paso, mapa, w, h):
+    cam_x = paso.x - w // 2
+    cam_y = paso.y - h // 2
+
+    cam_x = max(0, min(cam_x, mapa.get_width() - w))
+    cam_y = max(0, min(cam_y, mapa.get_height() - h))
+
+    return cam_x, cam_y
+
+# -----------------------------
+# Motor principal
+# -----------------------------
+def ejecutar_modo(VENTANA, estado, modo):
     tipo = estado["tipo_paso"]
+    paso = Paso(400, 800, tipo)
+    capataz = Capataz(420, 760)
+    costaleros = crear_cuadrilla_visual(tipo)
 
-    boton_volver = Boton((20, 20, 180, 55), "Volver", color_fondo=(180, 40, 40))
-
-    paso = Paso(450, 360, tipo)
-    capataz = Capataz(450, 220)
-    costaleros_visuales = crear_cuadrilla_visual(tipo)
-
+    mapa = cargar_mapa()
     reloj = pygame.time.Clock()
-    duracion_ensayo = 60 * 40
-    tiempo_restante = duracion_ensayo
+
+    boton_volver = BotonSimple((20, 20, 150, 45), "Volver")
+    boton_marcha = BotonSimple((VENTANA.get_width() - 170, 20, 150, 45), "Marcha")
 
     sincronizacion = estado["sincronizacion"]
     fatiga = estado["fatiga"]
     riesgo = estado["riesgo_lesion"]
-    moral_media = int(sum(c["moral"] for c in estado["hermanos"]) / len(estado["hermanos"]))
+    moral_media = int(sum(h["moral"] for h in estado["hermanos"]) / len(estado["hermanos"]))
 
     mensaje = ""
     mensaje_timer = 0
@@ -225,14 +281,11 @@ def menu_procesion(VENTANA, estado):
     cambios_buenos = 0
     cambios_malos = 0
 
+    objetivo_rect = pygame.Rect(700, 200, 120, 120) if modo == "recorrido" else None
+    completado = False
+
     while True:
         dt = reloj.tick(60)
-        tiempo_restante -= 1
-        if tiempo_restante <= 0:
-            estado["sincronizacion"] = int(sincronizacion)
-            estado["fatiga"] = int(fatiga)
-            estado["riesgo_lesion"] = int(riesgo)
-            return "inicio"
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -242,10 +295,9 @@ def menu_procesion(VENTANA, estado):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if boton_volver.clicado(pos):
-                    estado["sincronizacion"] = int(sincronizacion)
-                    estado["fatiga"] = int(fatiga)
-                    estado["riesgo_lesion"] = int(riesgo)
                     return "inicio"
+                if boton_marcha.clicado(pos):
+                    marcha_sonando = not marcha_sonando
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
@@ -303,7 +355,6 @@ def menu_procesion(VENTANA, estado):
 
         if paso.estado != PARADO:
             fatiga += 0.02 * (1 + abs(paso.vel))
-
         if fatiga > 70:
             riesgo += 0.03 * (fatiga - 70)
 
@@ -328,63 +379,100 @@ def menu_procesion(VENTANA, estado):
             if mensaje_timer == 0:
                 mensaje = ""
 
+        cam_x, cam_y = calcular_camara(paso, mapa, VENTANA.get_width(), VENTANA.get_height())
+
         VENTANA.fill(COLORES["fondo_procesion"])
+        VENTANA.blit(mapa, (-cam_x, -cam_y))
 
-        dibujar_titulo(VENTANA, f"ENSAYO AVANZADO — {tipo.upper()}", y=20)
+        if modo == "recorrido" and objetivo_rect:
+            obj_screen = pygame.Rect(
+                objetivo_rect.x - cam_x,
+                objetivo_rect.y - cam_y,
+                objetivo_rect.width,
+                objetivo_rect.height
+            )
+            pygame.draw.rect(VENTANA, (80, 160, 80), obj_screen, 3)
 
-        mapa_rect = pygame.Rect(80, 80, 740, 420)
-        dibujar_panel(VENTANA, mapa_rect, color=(15, 15, 15), radio=20)
+            if paso.rect().colliderect(objetivo_rect) and not completado:
+                completado = True
+                mensaje = "Recorrido completado. ¡La cuadrilla va de lujo!"
+                mensaje_timer = 300
+                sincronizacion += 5
+                moral_media += 5
 
-        pygame.draw.rect(VENTANA, (120, 80, 40), paso.rect(), border_radius=10)
+        paso_rect_screen = paso.rect().move(-cam_x, -cam_y)
+        pygame.draw.rect(VENTANA, (120, 80, 40), paso_rect_screen, border_radius=10)
 
-        for cv in costaleros_visuales:
-            cx, cy = cv.pos(paso)
+        for cv in costaleros:
+            cx, cy = cv.pos(paso, cam_x, cam_y)
             pygame.draw.circle(VENTANA, (200, 200, 200), (int(cx), int(cy)), 5)
 
-        capataz.dibujar(VENTANA)
+        capataz.dibujar(VENTANA, cam_x, cam_y)
 
         fuente = get_fuente(18, False)
         info = [
+            f"Modo: {'Recorrido' if modo == 'recorrido' else 'Ensayo libre'}",
+            f"Tipo: {tipo.capitalize()}",
             f"Sincronización: {int(sincronizacion)}",
             f"Fatiga: {int(fatiga)}",
             f"Riesgo lesión: {int(riesgo)}",
             f"Moral media: {int(moral_media)}",
-            f"Tiempo restante: {max(0, tiempo_restante // 60)} s",
-            f"Cambios buenos: {cambios_buenos}",
-            f"Cambios malos: {cambios_malos}",
             f"Marcha: {'ON' if marcha_sonando else 'OFF'}",
         ]
-        y = 520
+        y = 80
         for linea in info:
-            t = fuente.render(linea, True, COLORES["texto"])
-            VENTANA.blit(t, (80, y))
+            t = fuente.render(linea, True, (255, 255, 255))
+            VENTANA.blit(t, (20, y))
             y += 20
 
+        # -----------------------------
+        # PANEL DE CONTROLES (SIEMPRE VISIBLE)
+        # -----------------------------
         controles = [
-            "Controles:",
-            "1: De frente",
-            "2: Para atrás",
-            "3: Izquierda",
-            "4: Derecha",
-            "5: Costero izq",
-            "6: Costero der",
-            "7: Giro izq",
-            "8: Giro der",
-            "0: Parado",
-            "ESPACIO: Levantá",
-            "M: Marcha ON/OFF",
+            "CONTROLES:",
+            "1 → De frente",
+            "2 → Atrás",
+            "3 → Izquierda",
+            "4 → Derecha",
+            "5 → Costero Izq",
+            "6 → Costero Der",
+            "7 → Giro Izq",
+            "8 → Giro Der",
+            "0 → Parado",
+            "ESPACIO → Levantá",
+            "M → Marcha ON/OFF",
         ]
-        y = 520
-        for linea in controles:
-            t = fuente.render(linea, True, COLORES["texto"])
-            VENTANA.blit(t, (480, y))
-            y += 18
 
+        panel_controles = pygame.Rect(VENTANA.get_width() - 260, 120, 240, 260)
+        pygame.draw.rect(VENTANA, (20, 15, 40), panel_controles, border_radius=12)
+        pygame.draw.rect(VENTANA, (255, 215, 0), panel_controles, 2, border_radius=12)
+
+        y_texto = 130
+        for linea in controles:
+            t = fuente.render(linea, True, (255, 255, 255))
+            VENTANA.blit(t, (VENTANA.get_width() - 245, y_texto))
+            y_texto += 22
+
+        # Mensaje de eventos
         if mensaje:
-            color = COLORES["verde"] if "fina" in mensaje or "moral" in mensaje else COLORES["rojo"]
-            t = fuente.render(mensaje, True, color)
-            VENTANA.blit(t, (100, 480))
+            t = fuente.render(mensaje, True, (255, 255, 0))
+            VENTANA.blit(t, (20, VENTANA.get_height() - 40))
 
         boton_volver.dibujar(VENTANA)
+        boton_marcha.dibujar(VENTANA)
 
         pygame.display.update()
+
+# -----------------------------
+# Entrada principal del menú de procesión
+# -----------------------------
+def menu_procesion(VENTANA, estado):
+    modo = seleccionar_modo(VENTANA)
+    if modo is None:
+        return "inicio"
+
+    ok = seleccionar_tipo_paso(VENTANA, estado)
+    if not ok:
+        return "inicio"
+
+    return ejecutar_modo(VENTANA, estado, modo)
