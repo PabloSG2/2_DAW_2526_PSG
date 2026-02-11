@@ -1,8 +1,11 @@
+Como quedaría todo: https://youtu.be/E-YsKK0t5Gw
+
+**CARPETA FINAL**
 mycofradia3/
 │
 ├── main.py
 ├── config.py
-│e
+│
 ├── assets/
 │   ├── img/
 │   │   ├── fondo_menu.png
