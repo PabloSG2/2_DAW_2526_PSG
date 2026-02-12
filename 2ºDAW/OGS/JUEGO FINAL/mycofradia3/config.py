@@ -1,12 +1,15 @@
-ANCHO, ALTO = 900, 600
+import pygame
+
+ANCHO = 900
+ALTO = 600
 
 COLORES = {
-    "fondo": (15, 10, 35),
-    "texto": (255, 255, 255),
+    "fondo": (20, 15, 40),
+    "fondo_panel": (35, 25, 70),
+    "borde_panel": (255, 215, 0),
+    "texto": (240, 240, 240),
     "dorado": (255, 215, 0),
-    "panel": (35, 20, 70),
-    "verde": (0, 200, 0),
-    "rojo": (200, 50, 50),
-    "gris": (150, 150, 150),
-    "fondo_procesion": (30, 20, 25),
+    "boton": (90, 60, 150),
+    "boton_hover": (120, 80, 190),
+    "boton_texto": (255, 255, 255),
 }
