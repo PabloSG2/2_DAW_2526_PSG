@@ -1,13 +1,13 @@
 import pygame
 from config import COLORES
 
-# Timers globales para levantás
+# Timers globales
 levanta_timer = 0
 musica_timer = 0
 
 
 # ---------------------------------------------------------
-# 1. SELECCIONAR MODO
+# SELECCIONAR MODO
 # ---------------------------------------------------------
 def seleccionar_modo(VENTANA):
     fuente = pygame.font.SysFont("Segoe UI", 32, bold=True)
@@ -41,7 +41,7 @@ def seleccionar_modo(VENTANA):
 
 
 # ---------------------------------------------------------
-# 2. SELECCIONAR TIPO (CRISTO / VIRGEN)
+# SELECCIONAR TIPO (CRISTO / VIRGEN)
 # ---------------------------------------------------------
 def seleccionar_tipo(VENTANA):
     fuente = pygame.font.SysFont("Segoe UI", 32, bold=True)
@@ -75,36 +75,30 @@ def seleccionar_tipo(VENTANA):
 
 
 # ---------------------------------------------------------
-# 3. MOTOR PRINCIPAL DE LA PROCESIÓN
+# MOTOR PRINCIPAL
 # ---------------------------------------------------------
 def menu_procesion_motor(VENTANA, estado):
 
     global levanta_timer, musica_timer
 
-    # PRIMERO: elegir modo
     modo = seleccionar_modo(VENTANA)
     if modo is None:
         return "procesion"
 
-    # SEGUNDO: elegir tipo
     tipo = seleccionar_tipo(VENTANA)
     if tipo is None:
         return "procesion"
 
     clock = pygame.time.Clock()
 
-    # ---------------------------------------------------------
-    # CARGA DEL MAPA
-    # ---------------------------------------------------------
+    # Cargar mapa
     try:
         mapa = pygame.image.load("assets/img/fondo_procesion.png").convert()
     except:
         mapa = pygame.Surface((2000, 2000))
         mapa.fill((60, 40, 80))
 
-    # ---------------------------------------------------------
-    # CARGA DEL PASO (CRISTO / VIRGEN)
-    # ---------------------------------------------------------
+    # Cargar paso
     if tipo == "cristo":
         giro_vel = 1.2
         try:
@@ -120,9 +114,7 @@ def menu_procesion_motor(VENTANA, estado):
             paso_img = pygame.Surface((140, 200), pygame.SRCALPHA)
             pygame.draw.rect(paso_img, (200, 200, 80), (0, 0, 140, 200))
 
-    # ---------------------------------------------------------
-    # VARIABLES DEL PASO
-    # ---------------------------------------------------------
+    # Variables del paso
     paso_x = 1000
     paso_y = 1000
     paso_angulo = 0
@@ -134,9 +126,6 @@ def menu_procesion_motor(VENTANA, estado):
     velocidad = 4
     suavizado = 0.1
 
-    # ---------------------------------------------------------
-    # RECORRIDO AUTOMÁTICO (solo modo procesión)
-    # ---------------------------------------------------------
     recorrido = [(1000, 800), (1200, 800), (1200, 600), (1000, 600)]
     punto_actual = 0
 
@@ -145,6 +134,9 @@ def menu_procesion_motor(VENTANA, estado):
     # ---------------------------------------------------------
     while True:
         clock.tick(60)
+
+        # *** ARREGLA EL FALLO ***
+        fuente = pygame.font.SysFont("Segoe UI", 20, bold=True)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -156,67 +148,49 @@ def menu_procesion_motor(VENTANA, estado):
         keys = pygame.key.get_pressed()
 
         # ---------------------------------------------------------
-        # ANDARES DEL CRISTO Y VIRGEN
+        # ANDARES DEL CRISTO
         # ---------------------------------------------------------
-        # Timers de levantás (usan las globales)
-        global levanta_timer, musica_timer
-
-        # =========================
-        # CRISTO
-        # =========================
         if tipo == "cristo":
 
-            # 1 → Siempre de frente
             if keys[pygame.K_1]:
-                paso_y -= velocidad * 1.0
+                paso_y -= velocidad
 
-            # 2 → Paso racheado
             if keys[pygame.K_2]:
                 paso_y -= velocidad * 0.6
                 paso_altura = 1 if paso_altura == 0 else 0
                 paso_x += 0.3 * (1 if pygame.time.get_ticks() % 400 < 200 else -1)
 
-            # 3 → Costero izquierdo
             if keys[pygame.K_3]:
                 paso_x -= velocidad * 0.8
                 paso_y -= velocidad * 0.4
-                paso_altura = 2 if paso_altura == 0 else 0
 
-            # 4 → Costero derecho
             if keys[pygame.K_4]:
                 paso_x += velocidad * 0.8
                 paso_y -= velocidad * 0.4
-                paso_altura = 2 if paso_altura == 0 else 0
 
-            # 5 → Para atrás
             if keys[pygame.K_5]:
                 paso_y += velocidad * 0.8
 
-            # 6 → Picaíto
             if keys[pygame.K_6]:
                 paso_y -= velocidad * 1.3
                 paso_altura = 6 if paso_altura == 0 else 0
 
-            # 7 → Paso muda
             if keys[pygame.K_7]:
                 paso_y -= velocidad * 0.9
                 paso_altura = 0
 
-            # 8 → Pasito (ajuste fino)
             if keys[pygame.K_8]:
                 paso_y -= velocidad * 0.3
 
-            # 9 → Tres pasos
             if keys[pygame.K_9]:
                 ciclo = (pygame.time.get_ticks() // 300) % 4
                 if ciclo < 3:
-                    paso_y -= velocidad * 1.0
+                    paso_y -= velocidad
 
-            # 0 → Pararse ahí y se baja
             if keys[pygame.K_0]:
                 paso_altura = max(0, paso_altura - 1)
 
-            # LEVANTÁ (ESPACIO)
+            # LEVANTÁ
             if keys[pygame.K_SPACE] and levanta_timer == 0 and musica_timer == 0:
                 levanta_timer = 20
                 paso_altura = 12
@@ -225,11 +199,8 @@ def menu_procesion_motor(VENTANA, estado):
                 levanta_timer -= 1
                 if levanta_timer < 10:
                     paso_altura -= 1
-                # durante la levantá no se mueve nada más
-                # saltamos al final del bucle
-                # (no pongas 'continue' si te da problemas con el resto)
-            
-            # LEVANTÁ A LA MÚSICA (º → BACKQUOTE)
+
+            # LEVANTÁ A LA MÚSICA (º)
             if keys[pygame.K_BACKQUOTE] and musica_timer == 0 and levanta_timer == 0:
                 musica_timer = 60
                 paso_altura = 12
@@ -242,56 +213,49 @@ def menu_procesion_motor(VENTANA, estado):
                     paso_altura = 6
                 elif musica_timer > 20:
                     paso_y -= velocidad * 1.2
-                elif musica_timer > 0:
+                else:
                     paso_y -= velocidad * 0.8
 
-            # Controles para el panel
             controles = [
                 "CRISTO:",
                 "1 Siempre de frente",
-                "2 Paso racheado",
+                "2 Racheado",
                 "3 Costero izq",
                 "4 Costero der",
                 "5 Para atrás",
                 "6 Picaíto",
-                "7 Paso muda",
+                "7 Muda",
                 "8 Pasito",
                 "9 Tres pasos",
-                "0 Pararse y bajar",
+                "0 Pararse",
                 "ESPACIO Levantá",
-                "º Levantá a la música",
-                "A/D Girar",
-                "ESC Volver"
+                "º Levantá música",
+                "A/D Girar"
             ]
 
-        # =========================
-        # VIRGEN
-        # =========================
+        # ---------------------------------------------------------
+        # ANDARES DE LA VIRGEN
+        # ---------------------------------------------------------
         else:
-            # 1 → De frente
+
             if keys[pygame.K_1]:
                 paso_y -= velocidad * 0.9
 
-            # 2 → Para atrás
             if keys[pygame.K_2]:
                 paso_y += velocidad * 0.9
 
-            # 3 → En el sitio (mecida)
             if keys[pygame.K_3]:
                 paso_altura = 3 if paso_altura == 0 else 0
 
-            # 4 → Costero suave izq
             if keys[pygame.K_4]:
                 paso_x -= velocidad * 0.6
                 paso_y -= velocidad * 0.3
 
-            # 5 → Costero suave der
             if keys[pygame.K_5]:
                 paso_x += velocidad * 0.6
                 paso_y -= velocidad * 0.3
 
-            # LEVANTÁ (ESPACIO)
-            if keys[pygame.K_SPACE] and levanta_timer == 0 and musica_timer == 0:
+            if keys[pygame.K_SPACE] and levanta_timer == 0:
                 levanta_timer = 20
                 paso_altura = 10
 
@@ -300,8 +264,7 @@ def menu_procesion_motor(VENTANA, estado):
                 if levanta_timer < 10:
                     paso_altura -= 1
 
-            # LEVANTÁ A LA MÚSICA (º)
-            if keys[pygame.K_BACKQUOTE] and musica_timer == 0 and levanta_timer == 0:
+            if keys[pygame.K_BACKQUOTE] and musica_timer == 0:
                 musica_timer = 60
                 paso_altura = 10
 
@@ -313,39 +276,25 @@ def menu_procesion_motor(VENTANA, estado):
                     paso_altura = 5
                 elif musica_timer > 20:
                     paso_y -= velocidad * 0.9
-                elif musica_timer > 0:
+                else:
                     paso_y -= velocidad * 0.6
 
             controles = [
                 "VIRGEN:",
                 "1 De frente",
                 "2 Para atrás",
-                "3 En el sitio",
+                "3 Mecida",
                 "4 Costero izq",
                 "5 Costero der",
                 "ESPACIO Levantá",
-                "º Levantá a la música",
-                "A/D Girar",
-                "ESC Volver"
+                "º Levantá música",
+                "A/D Girar"
             ]
 
         # ---------------------------------------------------------
-        # PANEL LATERAL (USANDO 'controles')
+        # GIRO
         # ---------------------------------------------------------
-        y_texto = 95
-        for linea in controles:
-            t_linea = fuente.render(linea, True, COLORES["texto"])
-            VENTANA.blit(t_linea, (VENTANA.get_width() - 245, y_texto))
-            y_texto += 22
-
-
-        # ---------------------------------------------------------
-        # GIROS SUAVES
-        # ---------------------------------------------------------
-        if tipo == "cristo":
-            giro_suave = giro_vel * 0.6
-        else:
-            giro_suave = giro_vel
+        giro_suave = giro_vel * (0.6 if tipo == "cristo" else 1)
 
         if keys[pygame.K_a]:
             paso_angulo += giro_suave
@@ -353,21 +302,7 @@ def menu_procesion_motor(VENTANA, estado):
             paso_angulo -= giro_suave
 
         # ---------------------------------------------------------
-        # RECORRIDO AUTOMÁTICO
-        # ---------------------------------------------------------
-        if modo == "procesión":
-            tx, ty = recorrido[punto_actual]
-            dx = tx - paso_x
-            dy = ty - paso_y
-
-            if abs(dx) < 5 and abs(dy) < 5:
-                punto_actual = (punto_actual + 1) % len(recorrido)
-            else:
-                paso_x += dx * 0.02
-                paso_y += dy * 0.02
-
-        # ---------------------------------------------------------
-        # CÁMARA SUAVE
+        # CÁMARA
         # ---------------------------------------------------------
         objetivo_cam_x = paso_x - 450
         objetivo_cam_y = paso_y - 300
@@ -375,31 +310,23 @@ def menu_procesion_motor(VENTANA, estado):
         cam_y += (objetivo_cam_y - cam_y) * suavizado
 
         # ---------------------------------------------------------
-        # DIBUJO DEL MAPA
+        # DIBUJO
         # ---------------------------------------------------------
         VENTANA.fill(COLORES["fondo"])
         VENTANA.blit(mapa, (-cam_x, -cam_y))
 
-        # Barra superior
-        pygame.draw.rect(VENTANA, (10, 5, 25), (0, 0, VENTANA.get_width(), 60))
-        pygame.draw.line(VENTANA, COLORES["dorado"], (0, 60), (VENTANA.get_width(), 60), 2)
-
-        fuente = pygame.font.SysFont("Segoe UI", 20, bold=True)
-        t = fuente.render(f"PROCESIÓN - {tipo.upper()} ({modo.upper()})", True, COLORES["dorado"])
-        VENTANA.blit(t, (20, 20))
-
-        # ---------------------------------------------------------
-        # PANEL LATERAL
-        # ---------------------------------------------------------
+        # Panel lateral
         panel = pygame.Rect(VENTANA.get_width() - 260, 80, 240, 330)
         pygame.draw.rect(VENTANA, (20, 15, 40), panel, border_radius=12)
         pygame.draw.rect(VENTANA, COLORES["dorado"], panel, 2, border_radius=12)
 
-        # El contenido del panel se rellenará en PARTE 3 y PARTE 4
+        y_texto = 95
+        for linea in controles:
+            t_linea = fuente.render(linea, True, COLORES["texto"])
+            VENTANA.blit(t_linea, (VENTANA.get_width() - 245, y_texto))
+            y_texto += 22
 
-        # ---------------------------------------------------------
-        # DIBUJAR PASO
-        # ---------------------------------------------------------
+        # Paso
         imagen_rotada = pygame.transform.rotate(paso_img, paso_angulo)
         rect_img = imagen_rotada.get_rect(center=(paso_x - cam_x, paso_y - cam_y - paso_altura))
 
