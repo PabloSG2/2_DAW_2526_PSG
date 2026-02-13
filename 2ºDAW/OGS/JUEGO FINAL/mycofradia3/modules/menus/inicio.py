@@ -35,6 +35,18 @@ def cargar_icono(ruta, color):
 
 
 def menu_inicio(VENTANA, estado):
+
+    # ---------------------------------------------------------
+    # MÚSICA DE FONDO DEL MENÚ INICIO
+    # ---------------------------------------------------------
+    try:
+        pygame.mixer.music.load("assets/marchas/intro.mp3")
+        pygame.mixer.music.set_volume(0.6)
+        pygame.mixer.music.play(-1)
+    except:
+        print("No se pudo cargar intro.mp3")
+
+    # Fondo
     try:
         fondo = pygame.image.load("assets/img/fondo_menu.png").convert()
         fondo = pygame.transform.smoothscale(fondo, VENTANA.get_size())
@@ -90,6 +102,8 @@ def menu_inicio(VENTANA, estado):
                 pos = pygame.mouse.get_pos()
                 for b in botones:
                     if b.clicado(pos):
+                        pygame.mixer.music.stop()
+
                         return b.destino
 
         pygame.display.update()

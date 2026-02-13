@@ -1,10 +1,14 @@
 import pygame
+import os
 from core.botones import BotonSimple
 from core.ui import dibujar_titulo, dibujar_panel, dibujar_texto
 from config import COLORES
 from modules.menus.procesion import menu_procesion_motor
 
 
+# ---------------------------------------------------------
+# CARGAR ICONO
+# ---------------------------------------------------------
 def cargar_icono(ruta, tamaño=(40, 40), color=(120, 120, 120)):
     try:
         img = pygame.image.load(ruta).convert_alpha()
@@ -15,6 +19,9 @@ def cargar_icono(ruta, tamaño=(40, 40), color=(120, 120, 120)):
     return img
 
 
+# ---------------------------------------------------------
+# FONDO
+# ---------------------------------------------------------
 def dibujar_fondo(VENTANA):
     try:
         fondo = pygame.image.load("assets/img/fondo_procesion.png").convert()
@@ -24,6 +31,9 @@ def dibujar_fondo(VENTANA):
         VENTANA.fill(COLORES["fondo"])
 
 
+# ---------------------------------------------------------
+# GUARDAR DATOS
+# ---------------------------------------------------------
 def guardar_itinerario(estado):
     estado["procesion"]["itinerario"] = [
         "Salida: Parroquia",
@@ -73,6 +83,98 @@ def guardar_papeleta(estado):
     }
 
 
+# ---------------------------------------------------------
+# SELECTOR VISUAL DE MARCHAS + PLAY/STOP
+# ---------------------------------------------------------
+def elegir_marcha(VENTANA, estado):
+    carpeta = "assets/marchas/"
+
+    if not os.path.exists(carpeta):
+        os.makedirs(carpeta)
+
+    archivos = [f for f in os.listdir(carpeta)
+                if f.lower().endswith(".mp3") or f.lower().endswith(".wav")]
+
+    fuente = pygame.font.SysFont("Segoe UI", 28)
+    clock = pygame.time.Clock()
+
+    if not archivos:
+        estado["procesion"]["marcha"] = None
+        return
+
+    seleccionado = None
+
+    while True:
+        clock.tick(60)
+        VENTANA.fill((20, 20, 30))
+
+        titulo = fuente.render("Selecciona una marcha", True, COLORES["dorado"])
+        VENTANA.blit(titulo, (200, 40))
+
+        # Dibujar lista de marchas
+        for i, archivo in enumerate(archivos):
+            rect = pygame.Rect(150, 120 + i * 60, 500, 50)
+            pygame.draw.rect(VENTANA, (40, 40, 60), rect, border_radius=8)
+            pygame.draw.rect(VENTANA, COLORES["dorado"], rect, 2, border_radius=8)
+
+            texto = fuente.render(archivo, True, COLORES["texto"])
+            VENTANA.blit(texto, (rect.x + 20, rect.y + 10))
+
+        # Botón reproducir
+        boton_play = pygame.Rect(150, 500, 200, 55)
+        pygame.draw.rect(VENTANA, (20, 80, 20), boton_play, border_radius=8)
+        pygame.draw.rect(VENTANA, COLORES["dorado"], boton_play, 2, border_radius=8)
+        VENTANA.blit(fuente.render("▶ Reproducir", True, COLORES["texto"]), (boton_play.x + 20, boton_play.y + 10))
+
+        # Botón parar
+        boton_stop = pygame.Rect(370, 500, 200, 55)
+        pygame.draw.rect(VENTANA, (80, 20, 20), boton_stop, border_radius=8)
+        pygame.draw.rect(VENTANA, COLORES["dorado"], boton_stop, 2, border_radius=8)
+        VENTANA.blit(fuente.render("⏹ Parar", True, COLORES["texto"]), (boton_stop.x + 20, boton_stop.y + 10))
+
+        # Botón volver
+        boton_volver = pygame.Rect(20, 20, 150, 45)
+        pygame.draw.rect(VENTANA, (60, 20, 20), boton_volver, border_radius=8)
+        pygame.draw.rect(VENTANA, COLORES["dorado"], boton_volver, 2, border_radius=8)
+        VENTANA.blit(fuente.render("Volver", True, COLORES["texto"]), (40, 25))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+
+                # Volver
+                if boton_volver.collidepoint(x, y):
+                    pygame.mixer.music.stop()
+                    return
+
+                # Selección de marcha
+                for i, archivo in enumerate(archivos):
+                    rect = pygame.Rect(150, 120 + i * 60, 500, 50)
+                    if rect.collidepoint(x, y):
+                        seleccionado = archivo
+                        estado["procesion"]["marcha"] = carpeta + archivo
+
+                # Reproducir
+                if boton_play.collidepoint(x, y) and seleccionado:
+                    try:
+                        pygame.mixer.music.load(carpeta + seleccionado)
+                        pygame.mixer.music.play()
+                    except:
+                        print("Error al reproducir la marcha")
+
+                # Parar
+                if boton_stop.collidepoint(x, y):
+                    pygame.mixer.music.stop()
+
+        pygame.display.update()
+
+
+# ---------------------------------------------------------
+# MENÚ PRINCIPAL DE PROCESIÓN
+# ---------------------------------------------------------
 def menu_procesion(VENTANA, estado):
 
     boton_volver = BotonSimple((20, 20, 150, 45), "Volver")
@@ -83,6 +185,7 @@ def menu_procesion(VENTANA, estado):
         BotonSimple((110, 310, 240, 55), "Meteorología"),
         BotonSimple((110, 380, 240, 55), "Horarios"),
         BotonSimple((110, 450, 240, 55), "Papeletas"),
+        BotonSimple((110, 520, 240, 55), "Elegir marcha"),
         BotonSimple((520, 450, 260, 55), "Iniciar procesión"),
     ]
 
@@ -122,11 +225,11 @@ def menu_procesion(VENTANA, estado):
             if icono:
                 VENTANA.blit(icono, (b.rect.x - 50, b.rect.y + 7))
 
-        # Botón iniciar
-        botones[5].dibujar(VENTANA)
+        botones[5].dibujar(VENTANA)  # Elegir marcha
+        botones[6].dibujar(VENTANA)  # Iniciar procesión
         boton_volver.dibujar(VENTANA)
 
-        # Panel derecho: contenido
+        # Panel derecho
         dibujar_texto(VENTANA, "Resumen de la sección:", 420, 135, tamaño=22, negrita=True)
 
         if subpantalla == "itinerario":
@@ -157,6 +260,15 @@ def menu_procesion(VENTANA, estado):
             dibujar_texto(VENTANA, f"Número:   {p['numero']}", 430, 240, tamaño=18)
             dibujar_texto(VENTANA, f"Donativo: {p['donativo']}", 430, 270, tamaño=18)
 
+        elif subpantalla == "marcha":
+            dibujar_texto(VENTANA, "Marcha seleccionada:", 420, 175, tamaño=20, negrita=True)
+            m = estado["procesion"].get("marcha", None)
+            if m:
+                dibujar_texto(VENTANA, m.split("/")[-1], 430, 210, tamaño=18)
+            else:
+                dibujar_texto(VENTANA, "Ninguna", 430, 210, tamaño=18)
+
+        # EVENTOS
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "inicio"
@@ -187,7 +299,13 @@ def menu_procesion(VENTANA, estado):
                     subpantalla = "papeletas"
                     guardar_papeleta(estado)
 
+                # NUEVO: ELEGIR MARCHA
                 if botones[5].clicado(pos):
+                    elegir_marcha(VENTANA, estado)
+                    subpantalla = "marcha"
+
+                # INICIAR PROCESIÓN
+                if botones[6].clicado(pos):
                     menu_procesion_motor(VENTANA, estado)
 
         pygame.display.update()
