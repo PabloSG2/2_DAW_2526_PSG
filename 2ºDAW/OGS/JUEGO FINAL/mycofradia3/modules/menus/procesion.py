@@ -180,12 +180,12 @@ def menu_procesion_motor(VENTANA, estado):
 
     # Mapa
     try:
-        mapa = pygame.image.load("assets/img/fondo_procesion.png").convert()
+        mapa = pygame.image.load("assets/mapas/recorrido_urbano.png").convert()
     except:
         mapa = pygame.Surface((2000, 2000))
         mapa.fill((60, 40, 80))
 
-        # ---------------------------------------------------------
+    # ---------------------------------------------------------
     # CARGA DEL PASO Y SU FONDO
     # ---------------------------------------------------------
     if tipo == "cristo":
@@ -198,7 +198,7 @@ def menu_procesion_motor(VENTANA, estado):
 
         # FONDO DEL CRISTO
         try:
-            fondo_paso = pygame.image.load("assets/img/fondo_cristo.png").convert()
+            fondo_paso = pygame.image.load("assets/mapas/recorrido_urbano.png").convert()
         except:
             fondo_paso = pygame.Surface((800, 600))
             fondo_paso.fill((50, 20, 20))
@@ -215,7 +215,7 @@ def menu_procesion_motor(VENTANA, estado):
 
         # FONDO DE LA VIRGEN
         try:
-            fondo_paso = pygame.image.load("assets/img/fondo_virgen.png").convert()
+            fondo_paso = pygame.image.load("assets/mapas/recorrido_urbano.png").convert()
         except:
             fondo_paso = pygame.Surface((800, 600))
             fondo_paso.fill((20, 20, 50))
