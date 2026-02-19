@@ -24,18 +24,14 @@ def cargar_sonido(nombre, volumen=1.0):
         print("No se pudo cargar:", ruta_sonido)
         return None
 
-SON_RACHEO = cargar_sonido("racheo.mp3", 0.6)
+# SOLO LOS SONIDOS QUE EXISTEN EN TU CARPETA
 SON_LEVANTA = cargar_sonido("levanta.mp3", 1.0)
-SON_LEVANTA2 = cargar_sonido("levanta2.mp3", 1.0)
 SON_LLAMADOR = cargar_sonido("llamador.mp3", 1.0)
-SON_AMBIENTE = cargar_sonido("ambiente.mp3", 0.3)
 
+# VOCES DISPONIBLES
 VOCES = [
     cargar_sonido("a_esta_es.mp3", 1.0),
-    cargar_sonido("valientes.mp3", 1.0),
-    cargar_sonido("quieto_valientes.mp3", 1.0),
-    cargar_sonido("al_cielo_con_ella.mp3", 1.0),
-    cargar_sonido("vamonos_de_frente.mp3", 1.0),
+    cargar_sonido("vamonos_de_frente.mp3", 1.0)
 ]
 
 def reproducir_voz():
@@ -154,9 +150,7 @@ def seleccionar_tipo(VENTANA):
 def menu_procesion_motor(VENTANA, estado):
     global levanta_timer, musica_timer
 
-    # Ambiente
-    if SON_AMBIENTE:
-        SON_AMBIENTE.play(-1)
+    # Ambiente (NO EXISTE EN TU CARPETA → ELIMINADO)
 
     modo = seleccionar_modo(VENTANA)
     if modo is None:
@@ -196,7 +190,6 @@ def menu_procesion_motor(VENTANA, estado):
             paso_img = pygame.Surface((120, 180), pygame.SRCALPHA)
             pygame.draw.rect(paso_img, (200, 150, 50), (0, 0, 120, 180))
 
-        # FONDO DEL CRISTO
         try:
             fondo_paso = pygame.image.load("assets/mapas/recorrido_urbano.png").convert()
         except:
@@ -207,13 +200,11 @@ def menu_procesion_motor(VENTANA, estado):
         giro_vel = 1.5
         try:
             paso_img = pygame.image.load("assets/img/virgen.png").convert_alpha()
-            # ESCALA FIJA PARA QUE NO SEA GIGANTE
             paso_img = pygame.transform.smoothscale(paso_img, (110, 160))
         except:
             paso_img = pygame.Surface((110, 160), pygame.SRCALPHA)
             pygame.draw.rect(paso_img, (200, 200, 80), (0, 0, 110, 160))
 
-        # FONDO DE LA VIRGEN
         try:
             fondo_paso = pygame.image.load("assets/mapas/recorrido_urbano.png").convert()
         except:
@@ -231,8 +222,8 @@ def menu_procesion_motor(VENTANA, estado):
     cam_x = paso_x - 450
     cam_y = paso_y - 300
 
-    velocidad = 4
-    suavizado = 0.1
+    velocidad = 10
+    suavizado = 0.3
 
     ancho = VENTANA.get_width()
     alto = VENTANA.get_height()
@@ -253,8 +244,6 @@ def menu_procesion_motor(VENTANA, estado):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.mixer.music.stop()
-                if SON_AMBIENTE:
-                    SON_AMBIENTE.stop()
                 return "procesion"
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -263,12 +252,9 @@ def menu_procesion_motor(VENTANA, estado):
                 if boton_voces.clicado(pos):
                     reproducir_voz()
 
-            # SALIR CON ESC
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.mixer.music.stop()
-                    if SON_AMBIENTE:
-                        SON_AMBIENTE.stop()
                     return "procesion"
 
         keys = pygame.key.get_pressed()
@@ -344,24 +330,6 @@ def menu_procesion_motor(VENTANA, estado):
                 if levanta_timer < 10:
                     paso_altura -= 1
 
-            # LEVANTÁ A LA MÚSICA
-            if keys[pygame.K_BACKQUOTE] and musica_timer == 0:
-                musica_timer = 60
-                paso_altura = 12
-                if SON_LEVANTA2:
-                    SON_LEVANTA2.play()
-                pygame.mixer.music.set_volume(1.0)
-
-            if musica_timer > 0:
-                musica_timer -= 1
-                if musica_timer < 20:
-                    pygame.mixer.music.set_volume(0.8)
-
-            # RACHEO AUTOMÁTICO
-            if racheando and SON_RACHEO:
-                if not pygame.mixer.Channel(5).get_busy():
-                    pygame.mixer.Channel(5).play(SON_RACHEO)
-
             controles = [
                 "CRISTO:",
                 "1 Siempre de frente",
@@ -375,7 +343,6 @@ def menu_procesion_motor(VENTANA, estado):
                 "9 Tres pasos",
                 "0 Pararse",
                 "ESPACIO → Levantá",
-                "º → Levantá música",
                 "A/D Girar"
             ]
 
@@ -417,17 +384,6 @@ def menu_procesion_motor(VENTANA, estado):
                 if levanta_timer < 10:
                     paso_altura -= 1
 
-            # LEVANTÁ A LA MÚSICA VIRGEN
-            if keys[pygame.K_BACKQUOTE] and musica_timer == 0:
-                musica_timer = 60
-                paso_altura = 10
-                pygame.mixer.music.set_volume(1.0)
-
-            if musica_timer > 0:
-                musica_timer -= 1
-                if musica_timer < 20:
-                    pygame.mixer.music.set_volume(0.8)
-
             controles = [
                 "VIRGEN:",
                 "1 De frente",
@@ -436,7 +392,6 @@ def menu_procesion_motor(VENTANA, estado):
                 "4 Costero izq",
                 "5 Costero der",
                 "ESPACIO → Levantá",
-                "º → Levantá música",
                 "A/D Girar"
             ]
 
@@ -461,13 +416,13 @@ def menu_procesion_motor(VENTANA, estado):
         # ---------------------------------------------------------
         VENTANA.fill(COLORES["fondo"])
 
-        # FOTO GRANDE DEL PASO (Cristo o Virgen)
-        VENTANA.blit(fondo_paso, (0, 0))
-
-        # MAPA DETRÁS DEL PASO
+        # 1. MAPA
         VENTANA.blit(mapa, (-cam_x, -cam_y))
 
-        # PANEL DE CONTROLES
+        # 2. FONDO DEL PASO
+        VENTANA.blit(fondo_paso, (0, 0))
+
+        # 3. PANEL DE CONTROLES
         fuente = pygame.font.SysFont("Segoe UI", 20, bold=True)
         panel = pygame.Rect(VENTANA.get_width() - 260, 80, 240, 330)
         pygame.draw.rect(VENTANA, (20, 15, 40), panel, border_radius=12)
@@ -479,7 +434,7 @@ def menu_procesion_motor(VENTANA, estado):
             VENTANA.blit(t_linea, (VENTANA.get_width() - 245, y_texto))
             y_texto += 22
 
-        # SPRITE DEL PASO (Cristo o Virgen)
+        # 4. SPRITE DEL PASO
         imagen_rotada = pygame.transform.rotate(paso_img, paso_angulo)
         rect_img = imagen_rotada.get_rect(center=(paso_x - cam_x, paso_y - cam_y - paso_altura))
 
@@ -491,6 +446,7 @@ def menu_procesion_motor(VENTANA, estado):
 
         VENTANA.blit(imagen_rotada, rect_img)
 
+        # BOTONES
         boton_llamador.dibujar(VENTANA)
         boton_voces.dibujar(VENTANA)
 

@@ -177,6 +177,9 @@ def elegir_marcha(VENTANA, estado):
 # ---------------------------------------------------------
 def menu_procesion(VENTANA, estado):
 
+    # 🔥 IMPORTANTE: detener música del menú inicio
+    pygame.mixer.music.stop()
+
     boton_volver = BotonSimple((20, 20, 150, 45), "Volver")
 
     botones = [

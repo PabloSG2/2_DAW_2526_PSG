@@ -1,6 +1,7 @@
 import pygame
 from core.botones import get_fuente
 from config import COLORES
+import os
 
 
 class BotonLateral:
@@ -34,17 +35,26 @@ def cargar_icono(ruta, color):
     return img
 
 
+# ---------------------------------------------------------
+# CARGA DE MÚSICA DE INICIO
+# ---------------------------------------------------------
+def cargar_sonido_inicio():
+    ruta = os.path.join("assets", "sonidos", "inicio.mp3")
+    if os.path.exists(ruta):
+        try:
+            pygame.mixer.music.load(ruta)
+            pygame.mixer.music.set_volume(0.6)
+            pygame.mixer.music.play(-1)
+        except:
+            print("Error al reproducir inicio.mp3")
+    else:
+        print("inicio.mp3 no encontrado en assets/sonidos/")
+
+
 def menu_inicio(VENTANA, estado):
 
-    # ---------------------------------------------------------
-    # MÚSICA DE FONDO DEL MENÚ INICIO
-    # ---------------------------------------------------------
-    try:
-        pygame.mixer.music.load("assets/marchas/intro.mp3")
-        pygame.mixer.music.set_volume(0.6)
-        pygame.mixer.music.play(-1)
-    except:
-        print("No se pudo cargar intro.mp3")
+    # Reproducir música del menú
+    cargar_sonido_inicio()
 
     # Fondo
     try:
@@ -103,7 +113,6 @@ def menu_inicio(VENTANA, estado):
                 for b in botones:
                     if b.clicado(pos):
                         pygame.mixer.music.stop()
-
                         return b.destino
 
         pygame.display.update()

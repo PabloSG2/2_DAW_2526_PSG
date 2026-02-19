@@ -1,4 +1,11 @@
 import pygame
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS = os.path.join(BASE_DIR, "assets")
+SONIDOS = os.path.join(ASSETS, "sonidos")
+MARCHAS = os.path.join(ASSETS, "marchas")
+IMG = os.path.join(ASSETS, "img")
 
 ANCHO = 900
 ALTO = 600
